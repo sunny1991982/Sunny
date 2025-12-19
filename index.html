@@ -7,41 +7,42 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --main-blue: #0022ff; --main-pink: #ff00ff; --dark-bg: #0f172a; --card-bg: #1e293b; --text: #f8fafc; --accent: #fbbf24; }
+        :root { --main-blue: #0022ff; --main-pink: #ff00ff; --dark-bg: #0f172a; --card-bg: #1e293b; --text: #f8fafc; --accent: #fbbf24; --danger: #ef4444; }
         body { font-family: 'Kanit', sans-serif; background: #e9ecef; margin: 0; min-height: 100vh; color: var(--text); }
         .hidden { display: none !important; }
         .container { padding: 2rem 5%; max-width: 1000px; margin: auto; }
         
-        /* --- Login Style (ZxShop Style) --- */
-        .auth-container { display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .auth-card { background: white; width: 90%; max-width: 400px; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 2px solid var(--main-blue); text-align: center; color: #333; }
-        .subtitle { color: var(--main-pink); font-size: 0.9rem; margin-bottom: 25px; font-weight: bold; }
+        /* UI Elements */
+        .auth-card { background: white; width: 90%; max-width: 400px; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 2px solid var(--main-blue); text-align: center; color: #333; margin: 100px auto; }
         .input-group { text-align: left; margin-bottom: 15px; position: relative; }
         .input-group label { display: block; font-weight: bold; color: var(--main-blue); margin-bottom: 5px; }
+        .input-group input, .magic-input { width: 100%; padding: 12px 12px 12px 40px; border: 1px solid #ddd; border-radius: 10px; background: #fdfdfd; box-sizing: border-box; font-size: 1rem; color: #333; }
+        .magic-input { color: white; background: #0f172a; border-color: #334155; }
         .input-group i { position: absolute; left: 15px; bottom: 12px; color: var(--main-blue); }
-        .input-group input, .magic-input { width: 100%; padding: 12px 12px 12px 40px; border: 1px solid #ddd; border-radius: 10px; background: #fdfdfd; box-sizing: border-box; font-size: 1rem; }
-        .btn-submit { background: var(--main-blue); color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-size: 1.1rem; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-submit { background: var(--main-blue); color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; }
+        .btn-submit:hover { opacity: 0.8; transform: scale(1.02); }
         
-        /* --- Main Shop Style --- */
-        header { background: var(--card-bg); padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--main-blue); color: white; }
-        .user-info-card { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); border-radius: 15px; padding: 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        header { background: var(--card-bg); padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--main-blue); }
+        .user-info-card { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); border-radius: 15px; padding: 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
         .card { background: var(--card-bg); border-radius: 15px; padding: 20px; margin-bottom: 20px; border: 1px solid #334155; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
-        .product-card { background: #0f172a; padding: 15px; border-radius: 12px; border: 1px solid #334155; text-align: center; position: relative; }
-        .price-tag { color: var(--accent); font-size: 1.3rem; font-weight: bold; }
+        .product-card { background: #0f172a; padding: 15px; border-radius: 12px; border: 1px solid #334155; text-align: center; transition: 0.3s; }
+        .product-card:hover { border-color: var(--accent); transform: translateY(-5px); }
         
-        /* --- History & Gacha --- */
-        .history-item { border-bottom: 1px solid #334155; padding: 10px 0; font-size: 0.9rem; }
-        .secret-code-box { background: #000; color: var(--accent); padding: 8px; border-radius: 5px; margin-top: 5px; font-family: monospace; border: 1px dashed var(--accent); }
+        /* Admin Table */
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; background: #1e293b; border-radius: 10px; overflow: hidden; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #334155; }
+        th { background: #334155; color: var(--accent); }
+        .btn-sm { padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer; color: white; font-size: 0.8rem; margin-right: 5px; }
     </style>
 </head>
 <body>
 
-<div id="view-login" class="auth-container">
+<div id="view-login">
     <div class="auth-card">
-        <div style="font-size: 50px; color: var(--accent); margin-bottom: 10px;"><i class="fas fa-sun"></i></div>
-        <h2>Sunny Shop</h2>
-        <p class="subtitle">สมัครสมาชิก เพื่อรับประสบการณ์ที่ดีที่สุดของเรา !</p>
+        <div style="font-size: 50px; color: var(--accent);"><i class="fas fa-sun"></i></div>
+        <h2 style="margin:0;">Sunny Shop</h2>
+        <p style="color:var(--main-pink); font-weight:bold; font-size: 0.8rem; margin-bottom: 20px;">สุ่มเกม เติมโค้ด ระบบอัตโนมัติ 24 ชม.</p>
         <div class="input-group">
             <label>ชื่อผู้ใช้</label>
             <i class="fas fa-user-circle"></i>
@@ -55,65 +56,77 @@
         <button class="btn-submit" onclick="handleAuth()">
             <i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ / สมัครสมาชิก
         </button>
-        <p onclick="checkAdmin()" style="color: #ccc; font-size: 12px; cursor: pointer; margin-top: 15px;">Admin Panel</p>
+        <p onclick="checkAdmin()" style="color: #ccc; font-size: 11px; cursor: pointer; margin-top: 25px; opacity: 0.5;">[ ADMIN ACCESS ]</p>
     </div>
 </div>
 
 <div id="view-main" class="hidden" style="background: var(--dark-bg); min-height: 100vh;">
     <header>
         <h3 style="margin:0;"><i class="fas fa-sun"></i> Sunny Shop</h3>
-        <button onclick="location.reload()" style="background:none; border:none; color:white; cursor:pointer;"><i class="fas fa-power-off"></i> ออก</button>
+        <button onclick="location.reload()" style="background:#475569; border:none; color:white; cursor:pointer; padding: 5px 15px; border-radius: 5px;"><i class="fas fa-power-off"></i> ออกจากระบบ</button>
     </header>
 
     <div class="container">
         <div class="user-info-card">
-            <div><small>ผู้ใช้งาน:</small><h2 id="display-user" style="margin:0;">-</h2></div>
-            <div style="text-align:right;"><small>เครดิตคงเหลือ:</small><h2 style="margin:0; color:var(--accent);">฿ <span id="display-credit">0</span></h2></div>
+            <div><small style="opacity:0.8;">ยินดีต้อนรับ</small><h2 id="display-user" style="margin:0;">-</h2></div>
+            <div style="text-align:right;"><small style="opacity:0.8;">เงินในกระเป๋า</small><h2 style="margin:0; color:var(--accent);">฿ <span id="display-credit">0</span></h2></div>
         </div>
 
-        <div class="card" style="border: 2px solid var(--main-pink); background: linear-gradient(45deg, #1e293b, #2d1b4e);">
-            <h3 style="margin-top:0; color: var(--main-pink);"><i class="fas fa-dice"></i> Sunny Gacha</h3>
-            <p>ใช้ 10 เครดิต เพื่อสุ่มลุ้นรับรางวัลสูงสุด 100 บาท!</p>
-            <button class="btn-submit" style="background: var(--main-pink); width: 150px;" onclick="playGacha()">เสี่ยงโชค</button>
+        <div class="card" style="border: 2px solid #ef4444; background: linear-gradient(45deg, #2d1b1b, #0f172a); text-align:center;">
+            <h3 style="margin-top:0; color: #ef4444;"><i class="fas fa-dice"></i> Sunny Gacha (สุ่มละ 1 บาท)</h3>
+            <p style="color: #94a3b8; font-size: 0.9rem;">ลุ้นรับ 10 บาท | <b style="color:var(--danger);">อัตราเกลือ 92%</b></p>
+            <button class="btn-submit" style="background: #ef4444; width: 180px; margin: auto;" onclick="playGacha()">
+                <i class="fas fa-play"></i> สุ่มเลย ฿1
+            </button>
         </div>
 
-        <h3><i class="fas fa-shopping-bag"></i> รายการสินค้าพร้อมขาย</h3>
+        <div class="card">
+            <h4 style="margin-top:0;"><i class="fas fa-ticket-alt"></i> เติมโค้ดรับเครดิต</h4>
+            <div style="display:flex; gap:10px;">
+                <input type="text" id="redeem-input" class="magic-input" placeholder="ใส่โค้ดที่แอดมินแจก..." style="padding-left:15px; margin:0;">
+                <button class="btn-submit" style="width:120px; background:var(--accent); color:black;" onclick="useCode()">ใช้โค้ด</button>
+            </div>
+        </div>
+
+        <h3 style="border-left: 4px solid var(--main-blue); padding-left: 10px;">สินค้าแนะนำ</h3>
         <div id="product-list" class="grid"></div>
 
         <div class="card" style="margin-top:30px;">
-            <h3><i class="fas fa-history"></i> ประวัติการซื้อ (ดูรหัสสินค้าที่นี่)</h3>
-            <div id="history-list">ยังไม่มีประวัติการทำรายการ</div>
+            <h3><i class="fas fa-history"></i> ประวัติการซื้อ & รหัสที่ได้รับ</h3>
+            <div id="history-list" style="max-height: 400px; overflow-y: auto;">ยังไม่มีรายการ</div>
         </div>
     </div>
 </div>
 
 <div id="view-admin" class="hidden" style="background: #000; min-height: 100vh; color: white;">
     <div class="container">
-        <h1><i class="fas fa-user-shield"></i> Master Admin</h1>
+        <h1><i class="fas fa-user-shield"></i> Master Control Panel</h1>
         <button onclick="location.reload()" class="btn-submit" style="background:#333; width:auto; margin-bottom:20px;">กลับหน้าหลัก</button>
         
         <div class="grid">
             <div class="card">
-                <h4>เสกเงิน</h4>
-                <select id="admin-user-select" class="magic-input" style="padding-left:10px;"></select>
-                <input type="number" id="admin-money-amt" class="magic-input" placeholder="จำนวนเงิน" style="padding-left:10px; margin-top:10px;">
-                <button class="btn-submit" style="margin-top:10px;" onclick="adminAddMoney()">ยืนยันการเสก</button>
+                <h4><i class="fas fa-magic"></i> เสกเครดิต</h4>
+                <select id="adm-user-sel" class="magic-input" style="padding-left:10px;"></select>
+                <input type="number" id="adm-money" class="magic-input" placeholder="จำนวนเงิน" style="margin-top:10px; padding-left:10px;">
+                <button class="btn-submit" style="margin-top:10px;" onclick="adminAddMoney()">ยืนยันการเสกเงิน</button>
             </div>
             <div class="card">
-                <h4>สร้าง Redeem Code</h4>
-                <input type="text" id="admin-code-name" class="magic-input" placeholder="ชื่อโค้ด" style="padding-left:10px;">
-                <input type="number" id="admin-code-reward" class="magic-input" placeholder="เงินรางวัล" style="padding-left:10px; margin-top:10px;">
-                <input type="number" id="admin-code-limit" class="magic-input" placeholder="จำนวนคนใช้" style="padding-left:10px; margin-top:10px;">
-                <button class="btn-submit" style="margin-top:10px; background:var(--main-pink);" onclick="adminCreateCode()">สร้างโค้ด</button>
+                <h4><i class="fas fa-plus-circle"></i> เพิ่มสินค้าใหม่</h4>
+                <input type="text" id="adm-p-name" class="magic-input" placeholder="ชื่อสินค้า (เช่น บัตรเติมเกม)" style="padding-left:10px;">
+                <input type="number" id="adm-p-price" class="magic-input" placeholder="ราคา (บาท)" style="margin-top:10px; padding-left:10px;">
+                <input type="text" id="adm-p-code" class="magic-input" placeholder="รหัสลับ (จะเห็นหลังซื้อ)" style="margin-top:10px; padding-left:10px;">
+                <button class="btn-submit" style="margin-top:10px; background:var(--accent); color:black;" onclick="adminAddP()">ลงขายสินค้า</button>
             </div>
         </div>
 
         <div class="card">
-            <h4>เพิ่มสินค้าใหม่ (ต้องซื้อถึงเห็นรหัส)</h4>
-            <input type="text" id="p-name" class="magic-input" placeholder="ชื่อสินค้า" style="padding-left:10px;">
-            <input type="number" id="p-price" class="magic-input" placeholder="ราคา" style="padding-left:10px; margin-top:10px;">
-            <input type="text" id="p-secret" class="magic-input" placeholder="รหัสลับ (รหัสบัตร/ไอเทมโค้ด)" style="padding-left:10px; margin-top:10px;">
-            <button class="btn-submit" style="margin-top:10px; background:var(--accent); color:black;" onclick="adminAddProduct()">เพิ่มสินค้า</button>
+            <h4><i class="fas fa-users"></i> จัดการสมาชิก</h4>
+            <div id="adm-user-table" style="overflow-x:auto;"></div>
+        </div>
+        
+        <div class="card" style="border-color: var(--danger);">
+            <h4><i class="fas fa-box-open"></i> จัดการคลังสินค้า</h4>
+            <div id="adm-p-table" style="overflow-x:auto;"></div>
         </div>
     </div>
 </div>
@@ -140,30 +153,28 @@
     window.handleAuth = async () => {
         const u = document.getElementById('auth-user').value.trim();
         const p = document.getElementById('auth-pass').value.trim();
-        if(!u || !p) return alert("กรุณากรอกข้อมูล");
+        if(!u || !p) return alert("กรุณากรอกข้อมูลให้ครบ");
         
-        const userRef = ref(db, 'users/' + u);
-        const snap = await get(userRef);
+        const uRef = ref(db, 'users/' + u);
+        const s = await get(uRef);
         
-        if(snap.exists()) {
-            if(snap.val().password === p) loginSuccess(u);
+        if(s.exists()){
+            if(s.val().password === p) startSession(u); 
             else alert("รหัสผ่านไม่ถูกต้อง");
         } else {
-            await set(userRef, { password: p, credit: 0 });
-            alert("สมัครสมาชิกสำเร็จ!");
-            loginSuccess(u);
+            await set(uRef, {password: p, credit: 0});
+            alert("สมัครสมาชิกใหม่สำเร็จ!");
+            startSession(u);
         }
     };
 
-    function loginSuccess(u) {
+    function startSession(u) {
         currentU = u;
         document.getElementById('view-login').classList.add('hidden');
         document.getElementById('view-main').classList.remove('hidden');
         document.getElementById('display-user').innerText = u;
-        
         onValue(ref(db, `users/${u}/credit`), s => document.getElementById('display-credit').innerText = s.val() || 0);
-        loadProducts();
-        loadHistory();
+        loadProducts(); loadHistory();
     }
 
     // --- ระบบร้านค้า ---
@@ -174,104 +185,123 @@
             Object.entries(snap.val() || {}).forEach(([id, p]) => {
                 list.innerHTML += `
                 <div class="product-card">
-                    <h4>${p.name}</h4>
-                    <p class="price-tag">฿${p.price}</p>
-                    <button class="btn-submit" style="font-size:0.9rem;" onclick="buyItem('${id}', '${p.name}', ${p.price}, '${p.secretCode}')">ซื้อเลย</button>
+                    <h4 style="margin-bottom:5px;">${p.name}</h4>
+                    <p style="color:var(--accent); font-size:1.2rem; font-weight:bold; margin:10px 0;">฿${p.price}</p>
+                    <button class="btn-submit" style="padding:10px;" onclick="buyItem('${id}','${p.name}',${p.price},'${p.secret}')">ซื้อตอนนี้</button>
                 </div>`;
             });
         });
     }
 
-    window.buyItem = async (id, name, price, secret) => {
+    window.buyItem = async (id, name, prc, sec) => {
         const cRef = ref(db, `users/${currentU}/credit`);
-        const snap = await get(cRef);
-        const credit = snap.val() || 0;
-
-        if(credit >= price) {
-            if(confirm(`ยืนยันการซื้อ ${name}?`)) {
-                await set(cRef, credit - price);
-                await push(ref(db, `history/${currentU}`), {
-                    type: "ซื้อสินค้า",
-                    detail: name,
-                    code: secret,
-                    date: new Date().toLocaleString()
-                });
-                alert("ซื้อสำเร็จ! ดูรหัสสินค้าได้ที่ประวัติการซื้อ");
+        const s = await get(cRef);
+        if((s.val()||0) >= prc) {
+            if(confirm(`ยืนยันการซื้อ ${name} ราคา ${prc} บาท?`)) {
+                await set(cRef, s.val() - prc);
+                await push(ref(db, `history/${currentU}`), {type:"ซื้อสินค้า", detail:name, code:sec, date:new Date().toLocaleString()});
+                alert("ซื้อสำเร็จ! กรุณาตรวจสอบรหัสที่เมนู 'ประวัติการซื้อ'");
             }
-        } else alert("เครดิตไม่พอ");
+        } else alert("เครดิตคงเหลือไม่เพียงพอ");
+    };
+
+    // --- ระบบ Gacha (฿1, Salt 92%) ---
+    window.playGacha = async () => {
+        const cRef = ref(db, `users/${currentU}/credit`);
+        const s = await get(cRef);
+        if((s.val()||0) < 1) return alert("เครดิตไม่พอสุ่ม");
+        
+        await set(cRef, s.val() - 1);
+        const rand = Math.random() * 100;
+        let win = 0;
+        if(rand > 92) win = 10;
+        else if(rand > 80) win = 2;
+        
+        await set(cRef, (s.val() - 1) + win);
+        await push(ref(db, `history/${currentU}`), {type:"Gacha", detail:win>0?`ได้รับรางวัล ฿${win}`:`เกลือ (ไม่ได้รางวัล)`, date:new Date().toLocaleString()});
+        alert(win > 0 ? `ยินดีด้วย! คุณได้รับเงิน ฿${win}` : "เสียใจด้วย... คุณเกลือ!");
+    };
+
+    // --- ระบบใช้โค้ด ---
+    window.useCode = async () => {
+        const val = document.getElementById('redeem-input').value.trim();
+        if(!val) return;
+        const codeRef = ref(db, 'codes/' + val);
+        const s = await get(codeRef);
+        if(s.exists() && s.val().usedCount < s.val().limit) {
+            const uCRef = ref(db, `users/${currentU}/credit`);
+            const uS = await get(uCRef);
+            await update(codeRef, {usedCount: s.val().usedCount + 1});
+            await set(uCRef, (uS.val()||0) + s.val().reward);
+            alert("สำเร็จ! ได้รับรางวัล ฿" + s.val().reward);
+            document.getElementById('redeem-input').value = "";
+        } else alert("โค้ดผิด หรือมีคนใช้ครบแล้ว");
     };
 
     // --- ระบบ History ---
     function loadHistory() {
-        onValue(ref(db, `history/${currentU}`), snap => {
+        onValue(ref(db, `history/${currentU}`), s => {
             const cont = document.getElementById('history-list');
-            const data = snap.val();
-            if(!data) return;
-            cont.innerHTML = Object.values(data).reverse().map(h => `
-                <div class="history-item">
-                    <small>${h.date}</small><br>
+            const logs = s.val();
+            if(!logs) { cont.innerHTML = "ยังไม่มีประวัติการทำรายการ"; return; }
+            cont.innerHTML = Object.values(logs).reverse().map(h => `
+                <div style="border-bottom:1px solid #334155; padding:12px 0;">
+                    <small style="color:gray;">${h.date}</small><br>
                     <b>${h.type}:</b> ${h.detail}
-                    ${h.code ? `<div class="secret-code-box">รหัสสินค้า: ${h.code}</div>` : ""}
+                    ${h.code ? `<div style="color:var(--accent); background:#000; padding:8px; border:1px dashed var(--accent); margin-top:5px; font-family:monospace;">รหัสสินค้า: ${h.code}</div>`:""}
                 </div>
             `).join('');
         });
     }
 
-    // --- ระบบ Gacha ---
-    window.playGacha = async () => {
-        const cRef = ref(db, `users/${currentU}/credit`);
-        const snap = await get(cRef);
-        const credit = snap.val() || 0;
-        if(credit < 10) return alert("เครดิตไม่พอสุ่ม (10 บาท)");
-
-        await set(cRef, credit - 10);
-        const prizes = [0, 0, 5, 10, 20, 50, 100];
-        const win = prizes[Math.floor(Math.random() * prizes.length)];
-        await set(cRef, (credit - 10) + win);
-        
-        await push(ref(db, `history/${currentU}`), {
-            type: "Gacha",
-            detail: `สุ่มรางวัล ได้รับ ฿${win}`,
-            date: new Date().toLocaleString()
-        });
-        alert(`คุณได้รับรางวัล ฿${win}`);
-    };
-
-    // --- Admin Functions ---
+    // --- ADMIN PANEL ---
     window.checkAdmin = () => {
-        if(prompt("รหัสผ่านแอดมิน:") === "19911217") {
+        if(prompt("กรุณาใส่รหัสผ่านแอดมิน:") === "19911217") { 
             document.getElementById('view-login').classList.add('hidden');
             document.getElementById('view-admin').classList.remove('hidden');
-            loadAdminUsers();
+            loadAdminData();
         }
     };
 
-    function loadAdminUsers() {
-        onValue(ref(db, 'users'), snap => {
-            const sel = document.getElementById('admin-user-select');
-            sel.innerHTML = Object.keys(snap.val() || {}).map(u => `<option value="${u}">${u}</option>`).join('');
+    function loadAdminData() {
+        onValue(ref(db, 'users'), s => {
+            const data = s.val() || {};
+            document.getElementById('adm-user-sel').innerHTML = Object.keys(data).map(u => `<option value="${u}">${u}</option>`).join('');
+            document.getElementById('adm-user-table').innerHTML = `<table><tr><th>ชื่อผู้ใช้</th><th>เงิน</th><th>จัดการ</th></tr>` + 
+                Object.entries(data).map(([u, i]) => `<tr><td>${u}</td><td>฿${i.credit}</td><td><button onclick="admDelU('${u}')" class="btn-sm" style="background:var(--danger)">ลบสมาชิก</button></td></tr>`).join('') + `</table>`;
+        });
+        onValue(ref(db, 'items'), s => {
+            document.getElementById('adm-p-table').innerHTML = `<table><tr><th>ชื่อสินค้า</th><th>ราคา</th><th>จัดการ</th></tr>` + 
+                Object.entries(s.val()||{}).map(([id, p]) => `<tr><td>${p.name}</td><td>฿${p.price}</td><td><button onclick="admDelP('${id}')" class="btn-sm" style="background:var(--danger)">ลบสินค้า</button></td></tr>`).join('') + `</table>`;
         });
     }
 
     window.adminAddMoney = async () => {
-        const u = document.getElementById('admin-user-select').value;
-        const amt = parseFloat(document.getElementById('admin-money-amt').value);
+        const u = document.getElementById('adm-user-sel').value;
+        const amt = parseFloat(document.getElementById('adm-money').value);
+        if(isNaN(amt)) return;
         const cRef = ref(db, `users/${u}/credit`);
         const s = await get(cRef);
-        await set(cRef, (s.val() || 0) + amt);
-        alert("เสกเงินสำเร็จ!");
+        await set(cRef, (s.val()||0)+amt); alert("เสกเงินสำเร็จ!");
+        document.getElementById('adm-money').value = "";
     };
 
-    window.adminAddProduct = () => {
-        const name = document.getElementById('p-name').value;
-        const price = parseFloat(document.getElementById('p-price').value);
-        const secret = document.getElementById('p-secret').value;
-        if(name && price && secret) {
-            push(ref(db, 'items'), { name, price, secretCode: secret });
-            alert("เพิ่มสินค้าสำเร็จ");
-        }
+    window.adminAddP = () => {
+        const n = document.getElementById('adm-p-name').value;
+        const p = parseFloat(document.getElementById('adm-p-price').value);
+        const s = document.getElementById('adm-p-code').value;
+        if(n && p && s) {
+            push(ref(db, 'items'), {name:n, price:p, secret:s});
+            alert("เพิ่มสินค้าลงหน้าร้านแล้ว");
+            document.getElementById('adm-p-name').value = "";
+            document.getElementById('adm-p-price').value = "";
+            document.getElementById('adm-p-code').value = "";
+        } else alert("กรอกข้อมูลไม่ครบ");
     };
+
+    window.admDelU = (u) => { if(confirm(`ยืนยันการลบ ${u}?`)) set(ref(db, 'users/'+u), null); };
+    window.admDelP = (id) => { if(confirm("ยืนยันการลบสินค้า?")) set(ref(db, 'items/'+id), null); };
 </script>
 </body>
-                    </html>
-
+            </html>
+    

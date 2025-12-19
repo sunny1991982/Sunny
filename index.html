@@ -1,2 +1,352 @@
-# Sunny
-1guho
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Dev Hub - Official Store</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #1a2a6c;
+            --accent-color: #f39c12;
+            --bg-light: #f8f9fa;
+            --text-dark: #2c3e50;
+            --white: #ffffff;
+            --shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-light); color: var(--text-dark); line-height: 1.6; }
+
+        /* Navigation */
+        nav {
+            background: var(--primary-color);
+            color: var(--white);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow);
+        }
+
+        .logo { font-size: 1.5rem; font-weight: 600; letter-spacing: 1px; }
+        .nav-tools { display: flex; gap: 20px; align-items: center; }
+        .cart-icon { position: relative; cursor: pointer; font-size: 1.2rem; }
+        #cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background: var(--accent-color);
+            border-radius: 50%;
+            padding: 2px 6px;
+            font-size: 0.7rem;
+        }
+
+        /* Tabs/Sections */
+        .container { max-width: 1200px; margin: 2rem auto; padding: 0 20px; }
+        .section { display: none; }
+        .section.active { display: block; }
+
+        /* Product Cards */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .product-card:hover { transform: translateY(-5px); }
+        .product-card h3 { font-size: 1.2rem; color: var(--primary-color); }
+        .product-card .price { font-weight: 600; color: #e67e22; }
+        
+        .card-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: auto;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
+        }
+
+        /* Admin Form */
+        .admin-panel {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 12px;
+            max-width: 600px;
+            margin: auto;
+            box-shadow: var(--shadow);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-primary { background: var(--primary-color); color: white; }
+        .btn-primary:hover { opacity: 0.9; }
+
+        /* Modal Popup */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        /* Checkout Form */
+        .order-success {
+            text-align: center;
+            padding: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div class="logo">AI DEV HUB</div>
+    <div class="nav-tools">
+        <span onclick="showSection('store')" style="cursor:pointer">หน้าแรก</span>
+        <span onclick="showSection('admin')" style="cursor:pointer">จัดการสินค้า</span>
+        <div class="cart-icon" onclick="toggleCart()">
+            <i class="fas fa-shopping-cart"></i>
+            <span id="cart-count">0</span>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <section id="store" class="section active">
+        <h2 style="margin-bottom: 2rem;">รายการสินค้า</h2>
+        <div id="product-list" class="product-grid">
+            </div>
+    </section>
+
+    <section id="admin" class="section">
+        <div class="admin-panel">
+            <h2>เพิ่มสินค้าใหม่</h2>
+            <input type="text" id="p-name" placeholder="ชื่อสินค้า">
+            <input type="number" id="p-price" placeholder="ราคา (บาท)">
+            <textarea id="p-desc" placeholder="รายละเอียดสินค้า"></textarea>
+            <button class="btn btn-primary" onclick="addProduct()">เพิ่มสินค้าลงระบบ</button>
+        </div>
+    </section>
+
+    <section id="checkout" class="section">
+        <div class="admin-panel">
+            <h2>ข้อมูลการจัดส่ง</h2>
+            <form id="shipping-form" onsubmit="confirmOrder(event)">
+                <input type="text" required placeholder="ชื่อ-นามสกุล ผู้รับ">
+                <input type="tel" required placeholder="เบอร์โทรศัพท์">
+                <textarea required placeholder="ที่อยู่จัดส่งอย่างละเอียด"></textarea>
+                <select required>
+                    <option value="">เลือกวิธีการจัดส่ง</option>
+                    <option value="ems">EMS (ด่วนพิเศษ)</option>
+                    <option value="standard">Standard Delivery</option>
+                </select>
+                <button type="submit" class="btn btn-primary" style="width:100%">ยืนยันการสั่งซื้อ</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="success" class="section">
+        <div class="order-success">
+            <i class="fas fa-check-circle" style="font-size: 4rem; color: #27ae60;"></i>
+            <h2 style="margin: 20px 0;">สั่งซื้อสำเร็จ!</h2>
+            <p>หมายเลขคำสั่งซื้อของคุณคือ: <strong id="order-id">#ORD-0000</strong></p>
+            <button class="btn btn-primary" style="margin-top:20px" onclick="location.reload()">กลับสู่หน้าหลัก</button>
+        </div>
+    </section>
+</div>
+
+<div id="cartModal" class="modal">
+    <div class="modal-content">
+        <div style="display:flex; justify-content:space-between; margin-bottom:20px;">
+            <h3>ตะกร้าสินค้า</h3>
+            <i class="fas fa-times" onclick="toggleCart()" style="cursor:pointer"></i>
+        </div>
+        <div id="cart-items"></div>
+        <hr style="margin: 15px 0;">
+        <div style="display:flex; justify-content:space-between; font-weight:600;">
+            <span>ยอดรวมทั้งหมด:</span>
+            <span id="cart-total">0 บาท</span>
+        </div>
+        <button class="btn btn-primary" style="width:100%; margin-top:20px;" onclick="goToCheckout()">ดำเนินการต่อ</button>
+    </div>
+</div>
+
+<script>
+    let products = JSON.parse(localStorage.getItem('products')) || [
+        {id: 1, name: 'Smart Watch Pro', price: 2500, desc: 'นาฬิกาอัจฉริยะ ดีไซน์หรู'},
+        {id: 2, name: 'Wireless Earbuds', price: 1200, desc: 'หูฟังไร้สาย เสียงใส เบสแน่น'}
+    ];
+    let cart = [];
+
+    // Initialize
+    function init() {
+        renderProducts();
+        updateCartBadge();
+    }
+
+    // Navigation
+    function showSection(sectionId) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.getElementById(sectionId).classList.add('active');
+    }
+
+    // Render Products
+    function renderProducts() {
+        const list = document.getElementById('product-list');
+        list.innerHTML = products.map(p => `
+            <div class="product-card">
+                <h3>${p.name}</h3>
+                <p style="color: #666; font-size: 0.9rem;">${p.desc}</p>
+                <p class="price">${p.price.toLocaleString()} ฿</p>
+                <div class="card-controls">
+                    <label style="font-size: 0.8rem;">
+                        <input type="checkbox" onchange="handleSelect(${p.id}, this)" style="width: auto; margin-right: 5px;"> เลือกสินค้านี้
+                    </label>
+                    <input type="number" id="qty-${p.id}" value="1" min="1" style="width: 60px; margin: 0; padding: 5px;">
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Manage Products
+    function addProduct() {
+        const name = document.getElementById('p-name').value;
+        const price = document.getElementById('p-price').value;
+        const desc = document.getElementById('p-desc').value;
+
+        if(name && price) {
+            const newP = { id: Date.now(), name, price: Number(price), desc };
+            products.push(newP);
+            localStorage.setItem('products', JSON.stringify(products));
+            alert('เพิ่มสินค้าสำเร็จ!');
+            renderProducts();
+            showSection('store');
+        }
+    }
+
+    // Cart Logic
+    function handleSelect(id, checkbox) {
+        const qty = parseInt(document.getElementById(`qty-${id}`).value);
+        const product = products.find(p => p.id === id);
+
+        if(checkbox.checked) {
+            cart.push({...product, qty});
+        } else {
+            cart = cart.filter(item => item.id !== id);
+        }
+        updateCartBadge();
+    }
+
+    function updateCartBadge() {
+        document.getElementById('cart-count').innerText = cart.length;
+    }
+
+    function toggleCart() {
+        const modal = document.getElementById('cartModal');
+        if(modal.style.display === 'flex') {
+            modal.style.display = 'none';
+        } else {
+            renderCartItems();
+            modal.style.display = 'flex';
+        }
+    }
+
+    function renderCartItems() {
+        const container = document.getElementById('cart-items');
+        let total = 0;
+        
+        if(cart.length === 0) {
+            container.innerHTML = "<p style='text-align:center'>ไม่มีสินค้าในตะกร้า</p>";
+            document.getElementById('cart-total').innerText = "0 บาท";
+            return;
+        }
+
+        container.innerHTML = cart.map(item => {
+            total += (item.price * item.qty);
+            return `
+                <div style="display:flex; justify-content:space-between; margin-bottom:10px;">
+                    <span>${item.name} (x${item.qty})</span>
+                    <span>${(item.price * item.qty).toLocaleString()} ฿</span>
+                </div>
+            `;
+        }).join('');
+        document.getElementById('cart-total').innerText = total.toLocaleString() + " บาท";
+    }
+
+    function goToCheckout() {
+        if(cart.length === 0) return alert('กรุณาเลือกสินค้าก่อนครับ');
+        toggleCart();
+        showSection('checkout');
+    }
+
+    function confirmOrder(e) {
+        e.preventDefault();
+        const orderID = "ORD-" + Math.floor(1000 + Math.random() * 9000);
+        
+        // Save to LocalStorage
+        const orderData = {
+            orderID,
+            items: cart,
+            date: new Date().toISOString()
+        };
+        
+        let orders = JSON.parse(localStorage.getItem('orders')) || [];
+        orders.push(orderData);
+        localStorage.setItem('orders', JSON.stringify(orders));
+
+        document.getElementById('order-id').innerText = "#" + orderID;
+        showSection('success');
+        cart = []; // Reset cart
+        updateCartBadge();
+    }
+
+    window.onload = init;
+</script>
+
+</body>
+  </html>
+  

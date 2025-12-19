@@ -2,262 +2,122 @@
 <html lang="th">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sunny Shop - Game Topup</title>
+    <title>Sunny Shop - Store</title>
+    <link rel="stylesheet" href="style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        :root { --primary: #1a3a5f; --accent: #fbbf24; --bg: #0f172a; --card: #1e293b; --text: #f8fafc; }
-        body { font-family: 'Kanit', sans-serif; background: var(--bg); color: var(--text); margin: 0; }
-        header { background: var(--card); padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--accent); position: sticky; top: 0; z-index: 100; }
-        .container { padding: 2rem 5%; max-width: 1200px; margin: auto; }
-        .hidden { display: none ! disappearance; }
-        
-        /* UI Elements */
-        .card { background: var(--card); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        input, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box; }
-        .btn { cursor: pointer; padding: 12px; border: none; border-radius: 6px; font-weight: bold; width: 100%; transition: 0.2s; }
-        .btn-primary { background: var(--accent); color: var(--primary); }
-        .btn-admin { background: #ef4444; color: white; width: auto; padding: 5px 15px; }
-        
-        /* Grid */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
-        .item-card { background: var(--card); border: 1px solid #334155; padding: 15px; border-radius: 10px; text-align: center; }
-        .credit-badge { background: #10b981; padding: 5px 15px; border-radius: 20px; font-weight: bold; }
-    </style>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500&display=swap" rel="stylesheet">
 </head>
 <body>
-
-<div id="view-login" class="container" style="max-width: 400px; margin-top: 100px;">
-    <div class="card">
-        <h2 style="text-align:center"><i class="fas fa-sun"></i> Sunny Shop Login</h2>
-        <p style="font-size: 0.8rem; text-align: center; color: #94a3b8;">*ถ้าไม่มีชื่อในระบบ จะเป็นการสมัครสมาชิกใหม่</p>
-        <input type="text" id="user-name" placeholder="ชื่อผู้ใช้งาน">
-        <input type="password" id="user-pass" placeholder="รหัสผ่าน">
-        <button class="btn btn-primary" onclick="handleAuth()">เข้าสู่ระบบ / สมัครสมาชิก</button>
-        <hr style="border: 0.5px solid #334155; margin: 20px 0;">
-        <button class="btn btn-admin" onclick="checkAdmin()">Admin Panel</button>
+    <div id="login-section" class="container" style="max-width: 400px; margin-top: 100px;">
+        <div class="card">
+            <h2 style="text-align:center"><i class="fas fa-sun"></i> Sunny Shop</h2>
+            <input type="text" id="user-name" placeholder="ชื่อผู้ใช้งาน">
+            <input type="password" id="user-pass" placeholder="รหัสผ่าน">
+            <button class="btn btn-primary" onclick="handleAuth()">เข้าสู่ระบบ / สมัครใหม่</button>
+        </div>
     </div>
-</div>
 
-<div id="view-main" class="hidden">
-    <header>
-        <div>
-            <span style="font-weight: bold; font-size: 1.2rem;">ยินดีต้อนรับ, <span id="display-user"></span></span>
-        </div>
-        <div style="display: flex; gap: 15px; align-items: center;">
-            <span class="credit-badge">เครดิต: ฿<span id="display-credit">0</span></span>
-            <button class="btn btn-admin" style="background:#475569" onclick="logout()">ออก</button>
-        </div>
-    </header>
-
-    <div class="container">
-        <div class="card" style="border-left: 5px solid #10b981;">
-            <h3><i class="fas fa-wallet"></i> เติมเครดิต</h3>
-            <p>สถานะ: <b>ติดต่อเจ้าของร้านเพื่อเติมเงิน</b></p>
-            <p style="color: #94a3b8;">"นำเงินสดให้เจ้าของร้าน แล้วแจ้งชื่อผู้ใช้ เดี๋ยวเจ้าของจะเติมเครดิตให้ในระบบครับ"</p>
-            <div style="display: flex; gap: 10px;">
-                <input type="text" id="redeem-code-input" placeholder="ใส่โค้ดที่นี่ (ถ้ามี)" style="margin:0">
-                <button class="btn btn-primary" style="width: 120px;" onclick="redeemCode()">ใช้โค้ด</button>
+    <div id="main-section" class="hidden">
+        <header>
+            <div><i class="fas fa-user-circle"></i> <span id="display-user"></span></div>
+            <div>
+                <span class="credit-badge">฿ <span id="display-credit">0</span></span>
+                <button class="btn" style="width:auto; margin-left:10px; background:#475569; color:white;" onclick="location.reload()">ออก</button>
             </div>
+        </header>
+        <div class="container">
+            <div class="card" style="border-left: 5px solid #10b981;">
+                <h4><i class="fas fa-ticket-alt"></i> ใช้โค้ดรับรางวัล</h4>
+                <div style="display:flex; gap:10px;">
+                    <input type="text" id="code-input" placeholder="ใส่โค้ดที่นี่" style="margin:0">
+                    <button class="btn btn-primary" style="width:120px;" onclick="redeem()">ตกลง</button>
+                </div>
+            </div>
+            <h3>รายการสินค้าทั้งหมด</h3>
+            <div id="shop-items" class="grid"></div>
         </div>
-
-        <h3><i class="fas fa-gamepad"></i> รายการสินค้า/เกม</h3>
-        <div id="shop-items" class="grid"></div>
     </div>
-</div>
 
-<div id="view-admin" class="container hidden">
-    <div class="card">
-        <h2><i class="fas fa-user-shield"></i> ระบบหลังบ้าน (แอดมิน)</h2>
-        <button class="btn btn-secondary" onclick="location.reload()" style="background:#475569; color:white">กลับหน้าหลัก</button>
-        
-        <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-            <div class="card" style="background: #1e293b; border: 1px solid var(--accent);">
-                <h4>เสกเงินให้สมาชิก</h4>
-                <select id="admin-user-list"></select>
-                <input type="number" id="admin-amount" placeholder="จำนวนเงินที่ต้องการเสก">
-                <button class="btn btn-primary" onclick="adminAddMoney()">ยืนยันการเสกเงิน</button>
-            </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
+        import { getDatabase, ref, set, get, onValue, update } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
-            <div class="card" style="background: #1e293b; border: 1px solid #10b981;">
-                <h4>สร้าง Redeem Code</h4>
-                <input type="text" id="code-name" placeholder="ชื่อโค้ด (เช่น HELLO2025)">
-                <input type="number" id="code-reward" placeholder="จำนวนเงินที่จะได้รับ">
-                <input type="number" id="code-limit" placeholder="จำกัดจำนวนคนใช้">
-                <button class="btn btn-primary" style="background:#10b981; color:white" onclick="adminCreateCode()">สร้างโค้ด</button>
-            </div>
-        </div>
+        const firebaseConfig = { 
+            apiKey: "AIzaSyB2MNzL1-w1AxW5taQvyvTFJO4GkL4ucis",
+            authDomain: "sunny-shop-fc134.firebaseapp.com",
+            projectId: "sunny-shop-fc134",
+            storageBucket: "sunny-shop-fc134.firebasestorage.app",
+            messagingSenderId: "126433516060",
+            appId: "1:126433516060:web:dbc327c35a330a06271dd9",
+            databaseURL: "https://sunny-shop-fc134-default-rtdb.asia-southeast1.firebasedatabase.app"
+        };
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        let currentU = "";
 
-        <h4>รายการสินค้า (จัดการร้าน)</h4>
-        <input type="text" id="new-item-name" placeholder="ชื่อเกม/สินค้า">
-        <input type="number" id="new-item-price" placeholder="ราคา">
-        <button class="btn btn-primary" onclick="adminAddItem()">เพิ่มสินค้าใหม่</button>
-    </div>
-</div>
-
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getDatabase, ref, set, push, onValue, update, get } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
-
-    // ใส่ Config ของคุณตรงนี้
-    const firebaseConfig = {
-        apiKey: "AIzaSyB2MNzL1-w1AxW5taQvyvTFJO4GkL4ucis",
-        authDomain: "sunny-shop-fc134.firebaseapp.com",
-        projectId: "sunny-shop-fc134",
-        storageBucket: "sunny-shop-fc134.firebasestorage.app",
-        messagingSenderId: "126433516060",
-        appId: "1:126433516060:web:dbc327c35a330a06271dd9",
-        databaseURL: "https://sunny-shop-fc134-default-rtdb.asia-southeast1.firebasedatabase.app"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    let currentUser = null;
-
-    // --- ระบบสมาชิก ---
-    window.handleAuth = async () => {
-        const user = document.getElementById('user-name').value;
-        const pass = document.getElementById('user-pass').value;
-        if(!user || !pass) return alert("กรุณากรอกให้ครบ");
-
-        const userRef = ref(db, 'users/' + user);
-        const snapshot = await get(userRef);
-
-        if(snapshot.exists()) {
-            if(snapshot.val().password === pass) {
-                loginSuccess(user, snapshot.val());
+        window.handleAuth = async () => {
+            const u = document.getElementById('user-name').value.trim();
+            const p = document.getElementById('user-pass').value.trim();
+            if(!u || !p) return alert("กรุณากรอกข้อมูล");
+            const uRef = ref(db, 'users/' + u);
+            const snap = await get(uRef);
+            if(snap.exists()){
+                if(snap.val().password === p) startSession(u);
+                else alert("รหัสผ่านผิด");
             } else {
-                alert("รหัสผ่านไม่ถูกต้อง");
+                await set(uRef, { password: p, credit: 0 });
+                alert("สมัครสมาชิกใหม่สำเร็จ!");
+                startSession(u);
             }
-        } else {
-            // สมัครสมาชิกใหม่
-            await set(userRef, { password: pass, credit: 0 });
-            alert("สมัครสมาชิกสำเร็จ!");
-            loginSuccess(user, { credit: 0 });
+        };
+
+        function startSession(u) {
+            currentU = u;
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('main-section').classList.remove('hidden');
+            document.getElementById('display-user').innerText = u;
+            onValue(ref(db, `users/${u}/credit`), s => document.getElementById('display-credit').innerText = (s.val() || 0).toLocaleString());
+            loadItems();
         }
-    };
 
-    function loginSuccess(username, data) {
-        currentUser = username;
-        document.getElementById('view-login').classList.add('hidden');
-        document.getElementById('view-main').classList.remove('hidden');
-        document.getElementById('display-user').innerText = username;
-        
-        // ติดตามยอดเงิน Realtime
-        onValue(ref(db, 'users/' + username + '/credit'), (snap) => {
-            document.getElementById('display-credit').innerText = snap.val() || 0;
-        });
-        loadShop();
-    }
-
-    window.logout = () => location.reload();
-
-    // --- ระบบแอดมิน ---
-    window.checkAdmin = () => {
-        if(prompt("รหัสผ่านแอดมิน:") === "19911217") {
-            document.getElementById('view-login').classList.add('hidden');
-            document.getElementById('view-main').classList.add('hidden');
-            document.getElementById('view-admin').classList.remove('hidden');
-            loadAdminData();
-        } else { alert("รหัสไม่ถูกต้อง"); }
-    };
-
-    function loadAdminData() {
-        onValue(ref(db, 'users'), (snap) => {
-            const list = document.getElementById('admin-user-list');
-            list.innerHTML = "";
-            Object.keys(snap.val() || {}).forEach(u => {
-                list.innerHTML += `<option value="${u}">${u} (ยอดปัจจุบัน: ฿${snap.val()[u].credit})</option>`;
+        function loadItems() {
+            onValue(ref(db, 'items'), s => {
+                const cont = document.getElementById('shop-items');
+                cont.innerHTML = "";
+                Object.entries(s.val() || {}).forEach(([id, item]) => {
+                    cont.innerHTML += `<div class="item-card"><h4>${item.name}</h4><p style="color:#fbbf24; font-weight:bold;">฿${item.price.toLocaleString()}</p><button class="btn btn-primary" onclick="buy('${id}', ${item.price})">ซื้อเลย</button></div>`;
+                });
             });
-        });
-    }
-
-    window.adminAddMoney = () => {
-        const target = document.getElementById('admin-user-list').value;
-        const amount = parseFloat(document.getElementById('admin-amount').value);
-        if(!amount) return;
-        const creditRef = ref(db, `users/${target}/credit`);
-        get(creditRef).then(snap => {
-            set(creditRef, (snap.val() || 0) + amount);
-            alert(`เสกเงินให้ ${target} เรียบร้อย!`);
-        });
-    };
-
-    window.adminCreateCode = () => {
-        const name = document.getElementById('code-name').value;
-        const reward = parseFloat(document.getElementById('code-reward').value);
-        const limit = parseInt(document.getElementById('code-limit').value);
-        if(name && reward) {
-            set(ref(db, 'codes/' + name), { reward, limit, usedCount: 0 });
-            alert("สร้างโค้ดสำเร็จ!");
         }
-    };
 
-    // --- ระบบร้านค้า & ใช้โค้ด ---
-    function loadShop() {
-        onValue(ref(db, 'items'), (snap) => {
-            const container = document.getElementById('shop-items');
-            container.innerHTML = "";
-            const data = snap.val() || {};
-            Object.entries(data).forEach(([id, item]) => {
-                container.innerHTML += `
-                    <div class="item-card">
-                        <h4>${item.name}</h4>
-                        <p style="color:var(--accent)">฿${item.price}</p>
-                        <button class="btn btn-primary" onclick="buyItem('${id}', ${item.price})">ซื้อเลย</button>
-                    </div>`;
-            });
-        });
-    }
+        window.buy = async (id, price) => {
+            const cRef = ref(db, `users/${currentU}/credit`);
+            const s = await get(cRef);
+            const currentBalance = s.val() || 0;
+            if(currentBalance >= price) {
+                if(confirm("ยืนยันการซื้อ?")) {
+                    await set(cRef, currentBalance - price);
+                    alert("ซื้อสำเร็จ! ระบบหักเครดิตแล้ว");
+                }
+            } else alert("เครดิตไม่พอ กรุณาติดต่อเจ้าของร้าน");
+        };
 
-    window.adminAddItem = () => {
-        const name = document.getElementById('new-item-name').value;
-        const price = parseFloat(document.getElementById('new-item-price').value);
-        if(name && price) {
-            push(ref(db, 'items'), { name, price });
-            alert("เพิ่มสินค้าแล้ว");
-        }
-    };
-
-    window.buyItem = async (id, price) => {
-        const creditRef = ref(db, `users/${currentUser}/credit`);
-        const snap = await get(creditRef);
-        const myCredit = snap.val() || 0;
-        
-        if(myCredit >= price) {
-            await set(creditRef, myCredit - price);
-            alert("ซื้อสินค้าสำเร็จ! เครดิตถูกหักแล้ว");
-        } else {
-            alert("เครดิตไม่พอ กรุณาแจ้งเจ้าของร้านเพื่อเติมเงิน");
-        }
-    };
-
-    window.redeemCode = async () => {
-        const codeInput = document.getElementById('redeem-code-input').value;
-        if(!codeInput) return;
-        
-        const codeRef = ref(db, 'codes/' + codeInput);
-        const snap = await get(codeRef);
-        
-        if(snap.exists()) {
-            const data = snap.val();
-            if(data.usedCount < data.limit) {
-                const userCreditRef = ref(db, `users/${currentUser}/credit`);
-                const userSnap = await get(userCreditRef);
-                
-                await update(codeRef, { usedCount: data.usedCount + 1 });
-                await set(userCreditRef, (userSnap.val() || 0) + data.reward);
-                alert(`ยินดีด้วย! คุณได้รับ ฿${data.reward} จากโค้ดนี้`);
-                document.getElementById('redeem-code-input').value = "";
-            } else {
-                alert("โค้ดนี้ถูกใช้งานจนเต็มจำนวนแล้ว");
-            }
-        } else {
-            alert("ไม่พบโค้ดนี้ในระบบ");
-        }
-    };
-</script>
+        window.redeem = async () => {
+            const code = document.getElementById('code-input').value.trim();
+            const cRef = ref(db, 'codes/' + code);
+            const s = await get(cRef);
+            if(s.exists()) {
+                const data = s.val();
+                if(data.usedCount < data.limit) {
+                    const uCRef = ref(db, `users/${currentU}/credit`);
+                    const userSnap = await get(uCRef);
+                    await update(cRef, { usedCount: data.usedCount + 1 });
+                    await set(uCRef, (userSnap.val() || 0) + data.reward);
+                    alert(`สำเร็จ! ได้รับ ฿${data.reward}`);
+                    document.getElementById('code-input').value = "";
+                } else alert("โค้ดนี้ถูกใช้ครบจำนวนแล้ว");
+            } else alert("ไม่พบโค้ดนี้");
+        };
+    </script>
 </body>
-                                                                     </html>
-    
+    </html>
+                

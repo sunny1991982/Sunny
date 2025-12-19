@@ -3,404 +3,256 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sunny Shop - ระบบจัดการขั้นสุด</title>
+    <title>Sunny Shop - ระบบจัดการสมาชิก</title>
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { 
-            --primary: #FF8C00; /* ส้มหลัก */
-            --secondary: #FFD700; /* เหลืองรอง */
-            --accent: #FF4500; /* แดง/ส้มเน้น */
-            --bg: #FFFDF0; /* พื้นหลังร้าน */
-            --blue-auth: #0000FF; /* น้ำเงินสำหรับหน้า Auth */
-            --green-magic: #28a745; /* เขียวสำหรับเสกเงิน */
-            --red-delete: #dc3545; /* แดงสำหรับลบ */
-            --admin-bg: #fffbe6; /* พื้นหลังแอดมิน */
-        }
+        :root { --primary: #FF8C00; --secondary: #FFD700; --accent: #FF4500; --bg: #FFFDF0; --blue-auth: #0000FF; }
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Kanit', sans-serif; }
-        body { color: #333; }
         
-        /* --- สไตล์สำหรับหน้า Login / Register (Auth View) --- */
-        .auth-body { 
-            background: linear-gradient(135deg, #e0e0e0, #c0c0c0); 
-            display: flex; justify-content: center; align-items: center; min-height: 100vh;
-        }
-        .auth-card { 
-            background: white; width: 90%; max-width: 400px; padding: 30px; border-radius: 20px; 
-            border: 2px solid var(--blue-auth); box-shadow: 0 10px 30px rgba(0,0,0,0.15); 
-            text-align: center;
-        }
-        .auth-card h2 { color: var(--blue-auth); margin-bottom: 20px; font-weight: 700; }
-        .input-group { text-align: left; margin-bottom: 15px; }
-        .input-group label { display: block; font-size: 0.9rem; color: #555; font-weight: 600; margin-bottom: 5px; }
-        .input-field { 
-            width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 10px; 
-            background: #f9f9f9; outline: none; font-size: 1rem;
-        }
-        .btn-auth { 
-            width: 100%; padding: 12px; border: none; border-radius: 10px; font-weight: 600; 
-            cursor: pointer; margin-top: 10px; transition: all 0.2s ease;
-            background: var(--blue-auth); color: white;
-        }
-        .btn-auth:hover { opacity: 0.9; transform: translateY(-1px); }
-        .auth-link { color: var(--blue-auth); cursor: pointer; text-decoration: none; font-weight: 500;}
-        .auth-link:hover { text-decoration: underline; }
+        /* หน้า Login/Register (สไตล์ตามรูปที่คุณส่งมา) */
+        .auth-body { background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .auth-card { background: white; width: 100%; max-width: 450px; padding: 40px; border-radius: 15px; border: 2px solid var(--blue-auth); box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; }
+        .auth-card h2 { color: var(--blue-auth); font-size: 2rem; margin-bottom: 20px; font-weight: 800; }
+        .auth-label { display: block; text-align: left; font-weight: 600; color: var(--blue-auth); margin: 15px 0 5px; }
+        .input-box { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; background: #f9f9f9; outline: none; font-size: 1rem; }
+        .btn-auth-main { width: 100%; padding: 14px; background: var(--blue-auth); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 25px; font-size: 1.1rem; }
+        .btn-auth-sub { width: 100%; padding: 12px; background: white; color: var(--blue-auth); border: 1px solid var(--blue-auth); border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 10px; }
 
-        /* --- สไตล์สำหรับหน้าร้านค้าหลัก (Shop View) --- */
+        /* หน้า Shop */
         #shop-view { display: none; background-color: var(--bg); min-height: 100vh; }
-        nav { 
-            background: linear-gradient(135deg, var(--primary), var(--secondary)); 
-            padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; 
-            color: white; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-        }
-        .nav-logo { font-size: 1.6rem; font-weight: 800; }
-        .nav-button { background: none; border: none; color: white; cursor: pointer; font-size: 1.1rem; margin-left: 15px; transition: color 0.2s ease; }
-        .nav-button:hover { color: #f0f0f0; }
-
-        .container { max-width: 900px; margin: auto; padding: 20px; }
+        nav { background: linear-gradient(135deg, var(--primary), var(--secondary)); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; color: white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .container { max-width: 1000px; margin: auto; padding: 20px; }
+        .card { background: white; border-radius: 15px; padding: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 25px; }
+        .wallet-display { text-align: center; border: 2px solid var(--secondary); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+        .btn-buy { width: 100%; padding: 12px; background: var(--accent); color: white; border: none; border-radius: 10px; cursor: pointer; font-weight: 600; margin-top: 10px; }
         
-        /* Wallet Box */
-        .wallet-box { 
-            background: white; border-radius: 20px; padding: 25px; text-align: center; 
-            box-shadow: 0 8px 20px rgba(var(--primary), 0.1); border: 3px solid var(--secondary); 
-            margin-bottom: 30px;
-        }
-        .wallet-username { font-size: 1.1rem; color: #555; margin-bottom: 5px; }
-        .wallet-balance { font-size: 2.5rem; color: var(--accent); font-weight: 700; margin-top: 5px;}
-        .gift-input-group { display: flex; gap: 10px; margin-top: 20px; }
-        .gift-input { flex-grow: 1; padding: 12px; border: 1px solid #ddd; border-radius: 10px; }
-        .btn-topup { 
-            background: var(--primary); color: white; border: none; padding: 0 25px; 
-            border-radius: 10px; cursor: pointer; font-weight: 600; transition: all 0.2s ease;
-        }
-        .btn-topup:hover { opacity: 0.9; transform: translateY(-1px); }
-
-        /* Product Grid */
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
-        .product-card { 
-            background: white; border-radius: 18px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
-            border: 1px solid #eee; position: relative; transition: all 0.2s ease;
-        }
-        .product-card:hover { transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.1); }
-        .product-name { font-size: 1.3rem; margin-bottom: 8px; color: #444; }
-        .product-price { font-size: 1.8rem; font-weight: 700; color: var(--accent); margin-bottom: 5px; }
-        .product-stock { font-size: 0.9rem; color: #777; }
-        .btn-buy { 
-            background: var(--accent); color: white; border: none; width: 100%; padding: 12px; 
-            border-radius: 10px; cursor: pointer; margin-top: 15px; font-weight: 600; 
-            transition: all 0.2s ease;
-        }
-        .btn-buy:hover { background: #e63900; transform: translateY(-1px); }
-
-        /* History Panel */
-        #history-panel { 
-            display: none; background: white; border: 2px solid var(--primary); 
-            padding: 25px; border-radius: 20px; margin-bottom: 30px;
-        }
-        .history-item { 
-            background: #fdfdfd; padding: 15px; border-radius: 12px; margin-bottom: 10px; 
-            border-left: 6px solid var(--green-magic); border: 1px solid #eee;
-        }
-        .history-name { font-size: 1.1rem; font-weight: 600; color: #444; }
-        .history-date { font-size: 0.8rem; color: #888; float: right; }
-        .secret-tag { 
-            background: #e8f5e9; color: var(--green-magic); padding: 7px 10px; border-radius: 6px; 
-            font-weight: bold; margin-top: 10px; display: inline-block; border: 1px dashed var(--green-magic);
-            word-break: break-all; /* สำหรับรหัสที่ยาว */
-        }
-
-        /* --- สไตล์สำหรับ Admin Panel --- */
-        #admin-panel { 
-            display: none; background: var(--admin-bg); border: 2px solid var(--primary); 
-            padding: 25px; border-radius: 20px; margin-bottom: 30px;
-        }
-        .admin-section-title { color: var(--accent); margin-bottom: 15px; font-size: 1.5rem; }
-        .admin-close-btn { 
-            background: #ddd; border: none; padding: 8px 15px; border-radius: 10px; 
-            cursor: pointer; font-weight: 600; transition: all 0.2s ease;
-        }
-        .admin-close-btn:hover { background: #ccc; }
-
-        /* Member List Table (Admin) */
-        .member-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 0.95rem; }
-        .member-table th, .member-table td { border: 1px solid #f0e0d0; padding: 10px; text-align: left; }
-        .member-table th { background: #fbe0c0; color: #7a4e00; font-weight: 700; }
-        .member-credit-cell { font-weight: 600; color: #333; }
-        .btn-admin-action { 
-            background: var(--green-magic); color: white; border: none; padding: 6px 12px; 
-            border-radius: 5px; cursor: pointer; transition: all 0.2s ease; font-size: 0.9rem;
-        }
-        .btn-admin-action:hover { background: #218838; transform: translateY(-1px); }
-
-        /* Add Product Section */
-        .add-product-form input { margin-bottom: 10px; }
-        .btn-add-product { 
-            background: var(--primary); color: white; border: none; width: 100%; padding: 12px; 
-            border-radius: 10px; cursor: pointer; margin-top: 10px; font-weight: 600; 
-            transition: all 0.2s ease;
-        }
-        .btn-add-product:hover { background: #e07b00; transform: translateY(-1px); }
-
-        /* Delete Product Button (Admin view) */
-        .btn-delete-product { 
-            position: absolute; top: 10px; right: 10px; background: none; border: none; 
-            color: var(--red-delete); cursor: pointer; font-size: 1.2rem; transition: color 0.2s ease;
-        }
-        .btn-delete-product:hover { color: #c82333; transform: scale(1.1); }
+        /* แอดมิน */
+        #admin-panel { display: none; background: #fffbe6; border: 2px dashed var(--primary); padding: 20px; border-radius: 15px; margin-bottom: 25px; }
+        .member-row { display: flex; justify-content: space-between; align-items: center; padding: 10px; border-bottom: 1px solid #eee; }
     </style>
 </head>
 <body class="auth-body" id="main-body">
 
 <div id="auth-view" class="auth-card">
-    <div style="font-size: 3rem; color: var(--primary); margin-bottom: 10px;">☀️</div>
     <h2 id="auth-title">SUNNY SHOP</h2>
     
     <div id="login-form">
-        <div class="input-group">
-            <label for="login-user"><i class="fas fa-user"></i> ชื่อผู้ใช้</label>
-            <input type="text" id="login-user" class="input-field" placeholder="กรอกชื่อผู้ใช้งาน">
-        </div>
-        <div class="input-group">
-            <label for="login-pass"><i class="fas fa-lock"></i> รหัสผ่าน</label>
-            <input type="password" id="login-pass" class="input-field" placeholder="กรอกรหัสผ่าน">
-        </div>
-        <button class="btn-auth" onclick="handleLogin()">เข้าสู่ระบบ</button>
-        <p style="margin-top:15px; font-size:0.9rem;">
-            ยังไม่มีบัญชี? <a href="#" onclick="toggleAuth(false)" class="auth-link">สมัครสมาชิกที่นี่</a>
-        </p>
+        <label class="auth-label"><i class="fas fa-user"></i> ชื่อผู้ใช้</label>
+        <input type="text" id="login-user" class="input-box" placeholder="กรอกชื่อผู้ใช้งาน">
+        <label class="auth-label"><i class="fas fa-lock"></i> รหัสผ่าน</label>
+        <input type="password" id="login-pass" class="input-box" placeholder="กรอกรหัสผ่าน">
+        <button class="btn-auth-main" onclick="handleLogin()">เข้าสู่ระบบ</button>
+        <button class="btn-auth-sub" onclick="toggleToRegister()">สมัครสมาชิก</button>
     </div>
 
     <div id="register-form" style="display: none;">
-        <div class="input-group">
-            <label for="reg-user"><i class="fas fa-user-plus"></i> ตั้งชื่อผู้ใช้ใหม่</label>
-            <input type="text" id="reg-user" class="input-field" placeholder="ตั้งชื่อผู้ใช้งาน">
-        </div>
-        <div class="input-group">
-            <label for="reg-pass"><i class="fas fa-key"></i> ตั้งรหัสผ่าน</label>
-            <input type="password" id="reg-pass" class="input-field" placeholder="ตั้งรหัสผ่าน">
-        </div>
-        <button class="btn-auth" onclick="handleRegister()">ยืนยันการสมัคร</button>
-        <button class="btn-auth" style="background:#666; margin-top:5px;" onclick="toggleAuth(true)">กลับไปหน้าล็อกอิน</button>
+        <label class="auth-label"><i class="fas fa-user-plus"></i> ตั้งชื่อผู้ใช้ใหม่</label>
+        <input type="text" id="reg-user" class="input-box" placeholder="กรอกชื่อผู้ใช้งาน">
+        <label class="auth-label"><i class="fas fa-key"></i> ตั้งรหัสผ่าน</label>
+        <input type="password" id="reg-pass" class="input-box" placeholder="กรอกรหัสผ่าน">
+        <label class="auth-label"><i class="fas fa-check-circle"></i> ยืนยันรหัสผ่านอีกครั้ง</label>
+        <input type="password" id="reg-pass-confirm" class="input-box" placeholder="ยืนยันรหัสผ่าน">
+        <button class="btn-auth-main" onclick="handleRegister()">ยืนยันสมัครสมาชิก</button>
+        <button class="btn-auth-sub" onclick="toggleToLogin()">กลับไปหน้าล็อกอิน</button>
     </div>
 </div>
 
 <div id="shop-view">
     <nav>
-        <div class="nav-logo">☀️ SUNNY SHOP</div>
-        <div>
-            <button onclick="toggleHistory()" class="nav-button"><i class="fas fa-receipt"></i> ประวัติ</button>
-            <button onclick="showAdminAuth()" class="nav-button"><i class="fas fa-cog"></i></button>
-            <button onclick="logout()" class="nav-button"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</button>
+        <div style="font-size: 1.5rem; font-weight: 800;">SUNNY SHOP</div>
+        <div style="display: flex; gap: 15px;">
+            <button onclick="toggleHistory()" style="background:none; border:none; color:white; cursor:pointer;"><i class="fas fa-history"></i> ประวัติ</button>
+            <button onclick="showAdminAuth()" style="background:none; border:none; color:white; cursor:pointer;"><i class="fas fa-user-shield"></i></button>
+            <button onclick="logout()" style="background:none; border:none; color:white; cursor:pointer;"><i class="fas fa-power-off"></i></button>
         </div>
     </nav>
 
     <div class="container">
-        <div class="wallet-box">
-            <p class="wallet-username">ผู้ใช้งาน: <strong id="user-display"></strong></p>
-            <h3>ยอดเงินของคุณ: <span id="credit-val" class="wallet-balance">0</span> ฿</h3>
-            <hr style="margin:20px 0; border-color: #fdd835; opacity:0.5;">
-            <div class="gift-input-group">
-                <input type="text" id="gift-link" class="gift-input" placeholder="วางลิ้งก์ซองอั่งเปา TrueMoney...">
-                <button class="btn-topup" onclick="topUpGift()">เติมเงิน</button>
-            </div>
-            <small style="color:#a0a0a0; display:block; margin-top:10px;">(ระบบจำลอง: เงินเข้าเบอร์ 0657136186)</small>
-        </div>
-
-        <div id="admin-panel">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <h3 class="admin-section-title"><i class="fas fa-tools"></i> เมนูเจ้าของร้าน</h3>
-                <button onclick="hideAdminPanel()" class="admin-close-btn">ปิดหลังบ้าน</button>
-            </div>
-            
-            <div style="background:var(--admin-bg); padding:15px; border-radius:15px; margin:20px 0; border: 1px dashed var(--primary);">
-                <p style="font-weight:600; color:#555;"><i class="fas fa-money-check-alt"></i> จัดการเครดิตสมาชิก (เพิ่ม/ลด)</p>
-                <div id="member-list-admin" style="max-height: 250px; overflow-y: auto; margin-top:10px;">
-                    </div>
-            </div>
-
-            <hr style="border-color: #fdd835; opacity:0.5; margin: 20px 0;">
-
-            <h4 style="color:#555; margin-bottom:15px;"><i class="fas fa-box-open"></i> เพิ่มสินค้าใหม่เข้าร้าน</h4>
-            <div class="add-product-form">
-                <input type="text" id="p-name" class="input-field" placeholder="ชื่อสินค้า (ที่ลูกค้าเห็น)">
-                <input type="number" id="p-price" class="input-field" placeholder="ราคา">
-                <input type="number" id="p-stock" class="input-field" placeholder="จำนวนสต็อก">
-                <input type="password" id="p-secret" class="input-field" placeholder="รหัสสินค้า/ไอดี/พาส (ลูกค้าเห็นหลังซื้อ)">
-                <button class="btn-add-product" onclick="addNewProduct()">ยืนยันการเพิ่มสินค้า</button>
+        <div class="card wallet-display">
+            <p>สวัสดีคุณ <strong id="display-name"></strong></p>
+            <h1 style="color: var(--accent); font-size: 3rem; margin: 10px 0;"><span id="credit-val">0</span> ฿</h1>
+            <div style="display: flex; gap: 10px; max-width: 500px; margin: 15px auto;">
+                <input type="text" id="gift-link" class="input-box" placeholder="วางลิ้งก์ซองอั่งเปา...">
+                <button onclick="topUp()" style="background:var(--primary); color:white; border:none; padding:10px 20px; border-radius:8px; cursor:pointer;">เติมเงิน</button>
             </div>
         </div>
 
-        <div id="history-panel" style="display:none; margin-bottom:30px;">
-            <h3 style="margin-bottom:15px; color:var(--primary);"><i class="fas fa-clipboard-list"></i> ประวัติการซื้อของคุณ</h3>
-            <div id="history-list">
-                </div>
+        <div id="admin-panel" class="card">
+            <h3 style="color: var(--accent); margin-bottom:15px;">🛠️ จัดการสมาชิก & เสกเงิน</h3>
+            <div id="admin-member-list"></div>
+            <hr style="margin:20px 0;">
+            <h4>📦 เพิ่มสินค้าใหม่</h4>
+            <input type="text" id="p-name" class="input-box" placeholder="ชื่อสินค้า" style="margin-top:10px;">
+            <input type="number" id="p-price" class="input-box" placeholder="ราคา" style="margin-top:10px;">
+            <input type="number" id="p-stock" class="input-box" placeholder="สต็อก" style="margin-top:10px;">
+            <input type="text" id="p-secret" class="input-box" placeholder="รหัสไอดี/พาส (ลับ)" style="margin-top:10px;">
+            <button onclick="addNewProduct()" style="width:100%; margin-top:15px; padding:12px; background:var(--primary); color:white; border:none; border-radius:8px; cursor:pointer;">เพิ่มสินค้า</button>
         </div>
 
-        <h2 style="margin-bottom:20px; color:#444;"><i class="fas fa-store"></i> สินค้าแนะนำ</h2>
-        <div id="product-list" class="product-grid">
-            </div>
+        <div id="history-section" class="card" style="display:none;">
+            <h3>📋 ประวัติการซื้อ</h3>
+            <div id="history-list"></div>
+        </div>
+
+        <div id="product-list" class="grid"></div>
     </div>
 </div>
 
 <script>
-    // --- Global Data Storage (Local Storage for persistence) ---
-    // members: Stores user data { username: { password, credit, history: [] } }
+    // ดึงข้อมูลจากฐานข้อมูลจำลอง (LocalStorage)
     let members = JSON.parse(localStorage.getItem('sunny_members')) || {};
-    // shopItems: Stores product data { id, name, price, stock, secret }
     let shopItems = JSON.parse(localStorage.getItem('sunny_items')) || [];
-    
-    let currentUser = ""; // Tracks the currently logged-in user
-    let isAdminMode = false; // Flag for admin panel visibility
+    let currentUser = sessionStorage.getItem('logged_user') || "";
 
-    // --- Authentication (Login/Register) Functions ---
-    function toggleAuth(isLogin) {
-        document.getElementById('login-form').style.display = isLogin ? 'block' : 'none';
-        document.getElementById('register-form').style.display = isLogin ? 'none' : 'block';
-        document.getElementById('auth-title').innerText = isLogin ? 'SUNNY SHOP' : 'สมัครสมาชิก';
+    // ฟังก์ชันสลับหน้า
+    function toggleToRegister() {
+        document.getElementById('login-form').style.display = 'none';
+        document.getElementById('register-form').style.display = 'block';
+        document.getElementById('auth-title').innerText = 'สมัครสมาชิก';
     }
 
+    function toggleToLogin() {
+        document.getElementById('login-form').style.display = 'block';
+        document.getElementById('register-form').style.display = 'none';
+        document.getElementById('auth-title').innerText = 'SUNNY SHOP';
+    }
+
+    // ระบบสมัครสมาชิก
     function handleRegister() {
         const u = document.getElementById('reg-user').value.trim();
         const p = document.getElementById('reg-pass').value.trim();
-        if(!u || !p) { alert('กรุณากรอกชื่อผู้ใช้และรหัสผ่าน'); return; }
+        const pc = document.getElementById('reg-pass-confirm').value.trim();
 
-        if(members[u]) { alert('ชื่อผู้ใช้นี้มีคนใช้แล้ว'); return; }
+        if(!u || !p || !pc) return alert("กรุณากรอกข้อมูลให้ครบทุกช่อง");
+        if(p !== pc) return alert("รหัสผ่านไม่ตรงกัน");
+        if(members[u]) return alert("ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว");
 
+        // บันทึกสมาชิกใหม่
         members[u] = { password: p, credit: 0, history: [] };
-        saveAllData(); // Save members to localStorage
-        alert('สมัครสมาชิกสำเร็จ! กรุณาล็อกอิน');
-        toggleAuth(true); // Switch to login form
-        document.getElementById('reg-user').value = '';
-        document.getElementById('reg-pass').value = '';
+        localStorage.setItem('sunny_members', JSON.stringify(members));
+        alert("สร้างบัญชีสำเร็จ! ยินดีต้อนรับครับ");
+        toggleToLogin();
     }
 
+    // ระบบล็อกอิน
     function handleLogin() {
         const u = document.getElementById('login-user').value.trim();
         const p = document.getElementById('login-pass').value.trim();
-        if(!u || !p) { alert('กรุณากรอกชื่อผู้ใช้และรหัสผ่าน'); return; }
 
         if(members[u] && members[u].password === p) {
             currentUser = u;
-            sessionStorage.setItem('user', u); // Keep user logged in session
-            enterShop(); // Transition to shop view
+            sessionStorage.setItem('logged_user', u);
+            enterShop();
         } else {
-            alert('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+            alert("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง");
         }
-        document.getElementById('login-user').value = '';
-        document.getElementById('login-pass').value = '';
     }
 
     function enterShop() {
-        document.getElementById('main-body').classList.remove('auth-body'); // Change body background
-        document.getElementById('auth-view').style.display = 'none'; // Hide auth form
-        document.getElementById('shop-view').style.display = 'block'; // Show shop content
-        document.getElementById('user-display').innerText = currentUser; // Display current user
-        updateUI(); // Refresh all shop data
+        document.getElementById('main-body').style.background = "#FFFDF0";
+        document.getElementById('auth-view').style.display = 'none';
+        document.getElementById('shop-view').style.display = 'block';
+        document.getElementById('display-name').innerText = currentUser;
+        refreshUI();
     }
 
-    function logout() {
-        sessionStorage.clear(); // Clear session data
-        location.reload(); // Reload page to show login screen
-    }
-
-    // --- Shop Core Logic Functions ---
-    function updateUI() {
+    function refreshUI() {
         document.getElementById('credit-val').innerText = members[currentUser].credit.toLocaleString();
         renderProducts();
         renderHistory();
-        renderAdminMembers(); // Always render admin member list (hidden by default)
-    }
-
-    function topUpGift() {
-        const link = document.getElementById('gift-link').value.trim();
-        if(link.includes('gift.truemoney.com')) {
-            // Simulate adding 50 THB
-            const amount = 50; 
-            members[currentUser].credit += amount;
-            saveAllData();
-            alert(`เติมเครดิตสำเร็จ ${amount} ฿!`);
-            document.getElementById('gift-link').value = '';
-        } else {
-            alert('กรุณาใส่ลิงก์ซองอั่งเปา TrueMoney ที่ถูกต้อง');
-        }
+        renderAdminMembers();
     }
 
     function renderProducts() {
         const list = document.getElementById('product-list');
-        if(shopItems.length === 0) {
-            list.innerHTML = "<p style='text-align:center; color:#777; margin-top:30px;'>ยังไม่มีสินค้าในร้านนี้</p>";
-            return;
-        }
-
         list.innerHTML = shopItems.map(item => `
-            <div class="product-card">
-                ${isAdminMode ? `<button class="btn-delete-product" onclick="removeItem(${item.id})"><i class="fas fa-trash-alt"></i></button>` : ''}
-                <h3 class="product-name">${item.name}</h3>
-                <p class="product-price">${item.price.toLocaleString()} ฿</p>
-                <p class="product-stock">คงเหลือ: ${item.stock} ชิ้น</p>
-                <button class="btn-buy" onclick="buyItem(${item.id})">ซื้อเลย</button>
+            <div class="card">
+                <h3>${item.name}</h3>
+                <h2 style="color:var(--accent); margin:10px 0;">${item.price} ฿</h2>
+                <p>คงเหลือ: ${item.stock}</p>
+                <button class="btn-buy" onclick="buyItem(${item.id})">ซื้อสินค้า</button>
             </div>
         `).join('');
     }
 
     function buyItem(id) {
         const item = shopItems.find(i => i.id === id);
-        if(!item) return alert('สินค้าไม่พบ');
-        if(item.stock <= 0) return alert('ขออภัย สินค้าหมดสต็อกแล้ว!');
-        if(members[currentUser].credit < item.price) return alert('เครดิตของคุณไม่เพียงพอ!');
-        
-        if(confirm(`ยืนยันการซื้อ "${item.name}" ราคา ${item.price} ฿ ?`)) {
-            members[currentUser].credit -= item.price;
-            item.stock -= 1;
-            
-            // Add bought item to user's history
-            members[currentUser].history.unshift({
-                name: item.name,
-                secret: item.secret,
-                date: new Date().toLocaleString()
-            });
-            
-            saveAllData();
-            alert('การสั่งซื้อสำเร็จ! ตรวจสอบรหัสสินค้าได้ที่เมนู "ประวัติ"');
-        }
+        if(members[currentUser].credit < item.price) return alert("เงินไม่พอครับ");
+        if(item.stock <= 0) return alert("สินค้าหมดแล้ว");
+
+        members[currentUser].credit -= item.price;
+        item.stock -= 1;
+        members[currentUser].history.unshift({ name: item.name, secret: item.secret, date: new Date().toLocaleString() });
+        save();
+        refreshUI();
+        alert("ซื้อสำเร็จ!");
     }
 
     function renderHistory() {
         const list = document.getElementById('history-list');
-        const userHistory = members[currentUser].history || [];
-        
-        if(userHistory.length === 0) {
-            list.innerHTML = "<p style='text-align:center; color:#777; margin-top:20px;'>ยังไม่มีประวัติการซื้อ</p>";
-            return;
-        }
+        const h = members[currentUser].history || [];
+        list.innerHTML = h.map(x => `<div style="padding:10px; border-bottom:1px solid #eee;"><strong>${x.name}</strong><br><span style="color:green;">รหัส: ${x.secret}</span></div>`).join('');
+    }
 
-        list.innerHTML = userHistory.map(h => `
-            <div class="history-item">
-                <span class="history-name">${h.name}</span> 
-                <span class="history-date">${h.date}</span><br>
-                <div class="secret-tag"><i class="fas fa-key"></i> รหัสสินค้า: ${h.secret}</div>
+    function toggleHistory() {
+        const s = document.getElementById('history-section');
+        s.style.display = s.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function showAdminAuth() {
+        if(prompt("รหัสแอดมิน:") === "19911217") {
+            document.getElementById('admin-panel').style.display = 'block';
+            refreshUI();
+        }
+    }
+
+    function renderAdminMembers() {
+        const list = document.getElementById('admin-member-list');
+        list.innerHTML = Object.keys(members).map(u => `
+            <div class="member-row">
+                <span>${u} (${members[u].credit} ฿)</span>
+                <div>
+                    <button onclick="editMoney('${u}', 1)" style="color:green;">+ เสก</button>
+                    <button onclick="editMoney('${u}', -1)" style="color:red;">- หัก</button>
+                </div>
             </div>
         `).join('');
     }
 
-    function toggleHistory() {
-        const p = document.getElementById('history-panel');
-        p.style.display = p.style.display === 'none' ? 'block' : 'none';
-        if(p.style.display === 'block') {
-            window.scrollTo(0, p.offsetTop - 70); // Scroll to history panel
+    function editMoney(user, type) {
+        const amt = parseFloat(prompt("จำนวนเงิน:"));
+        if(amt > 0) {
+            members[user].credit += (amt * type);
+            save(); refreshUI();
         }
     }
 
-    // --- Admin Panel Functions ---
-    function showAdminAuth() {
-        const adminPass = prompt('กรุณาใส่รหัสผ่านเจ้าของร้านเพื่อเข้าสู่โหมด Admin:');
-        if(adminPass === "19911217") { // Admin password
-            isAdminMode = true;
-            document.getElementById('admin-panel').style.display = 'block';
-            updateUI(); // Refresh UI in admin mode (show delete buttons)
-        } else if (adminPass !== null) {
-            alert('รหัสผ่านไม่ถูกต้อง!');
+    function addNewProduct() {
+        const n = document.getElementById('p-name').value, p = parseFloat(document.getElementById('p-price').value), s = parseInt(document.getElementById('p-stock').value), sec = document.getElementById('p-secret').value;
+        if(n && p >= 0) {
+            shopItems.push({ id: Date.now(), name: n, price: p, stock: s, secret: sec });
+            save(); refreshUI(); alert("เพิ่มแล้ว!");
         }
     }
 
-    functio
+    function topUp() {
+        const link = document.getElementById('gift-link').value;
+        if(link.includes("truemoney")) {
+            members[currentUser].credit += 50; save(); refreshUI();
+            alert("เติมสำเร็จ 50 บาท (จำลอง)");
+        }
+    }
+
+    function save() {
+        localStorage.setItem('sunny_members', JSON.stringify(members));
+        localStorage.setItem('sunny_items', JSON.stringify(shopItems));
+    }
+
+    function logout() { sessionStorage.clear(); location.reload(); }
+    window.onload = () => { if(currentUser) enterShop(); };
+</script>
+</body>
+    </html>
+    

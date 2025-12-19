@@ -3,96 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sunny Shop - Official Store</title>
+    <title>Sunny Shop - Game Topup</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        :root { --primary: #1a3a5f; --accent: #d4af37; --bg: #f4f7f9; --white: #ffffff; }
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background: var(--bg); margin: 0; padding-bottom: 50px; }
-        header { background: var(--primary); color: var(--white); padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        :root { --primary: #1a3a5f; --accent: #fbbf24; --bg: #0f172a; --card: #1e293b; --text: #f8fafc; }
+        body { font-family: 'Kanit', sans-serif; background: var(--bg); color: var(--text); margin: 0; }
+        header { background: var(--card); padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--accent); position: sticky; top: 0; z-index: 100; }
         .container { padding: 2rem 5%; max-width: 1200px; margin: auto; }
-        .hidden { display: none; }
+        .hidden { display: none ! disappearance; }
         
-        /* Product Card UI */
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
-        .product-card { background: var(--white); border-radius: 12px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 5px solid var(--accent); transition: 0.3s; }
-        .product-card:hover { transform: translateY(-5px); }
-        .product-card h3 { margin: 10px 0; color: var(--primary); }
-        .price { font-size: 1.4rem; font-weight: bold; color: #c0392b; margin: 10px 0; }
+        /* UI Elements */
+        .card { background: var(--card); border-radius: 12px; padding: 20px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        input, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 6px; border: 1px solid #334155; background: #0f172a; color: white; box-sizing: border-box; }
+        .btn { cursor: pointer; padding: 12px; border: none; border-radius: 6px; font-weight: bold; width: 100%; transition: 0.2s; }
+        .btn-primary { background: var(--accent); color: var(--primary); }
+        .btn-admin { background: #ef4444; color: white; width: auto; padding: 5px 15px; }
         
-        /* Forms & Buttons */
-        input, textarea { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 1rem; }
-        .btn { cursor: pointer; padding: 12px 24px; border: none; border-radius: 6px; font-weight: bold; transition: 0.3s; width: 100%; }
-        .btn-primary { background: var(--primary); color: white; }
-        .btn-accent { background: var(--accent); color: var(--primary); }
-        .btn-secondary { background: #e0e0e0; color: #333; margin-top: 10px; }
-
-        /* Cart Icon */
-        .cart-icon { position: relative; cursor: pointer; font-size: 1.8rem; }
-        #cart-count { position: absolute; top: -5px; right: -5px; background: var(--accent); color: var(--primary); border-radius: 50%; padding: 2px 7px; font-size: 0.8rem; font-weight: bold; }
-
-        /* Popup Modal */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: flex; justify-content: center; align-items: center; z-index: 2000; }
-        .modal-content { background: white; padding: 30px; border-radius: 15px; width: 90%; max-width: 500px; max-height: 80vh; overflow-y: auto; }
+        /* Grid */
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px; }
+        .item-card { background: var(--card); border: 1px solid #334155; padding: 15px; border-radius: 10px; text-align: center; }
+        .credit-badge { background: #10b981; padding: 5px 15px; border-radius: 20px; font-weight: bold; }
     </style>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;500&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<header>
-    <h1 style="margin:0;"><i class="fas fa-sun"></i> Sunny Shop</h1>
-    <div style="display: flex; align-items: center; gap: 20px;">
-        <button class="btn btn-accent" style="width:auto; padding: 8px 15px;" onclick="checkAdmin()">Admin</button>
-        <span class="cart-icon" onclick="openCart()">
-            <i class="fas fa-shopping-cart"></i>
-            <span id="cart-count">0</span>
-        </span>
+<div id="view-login" class="container" style="max-width: 400px; margin-top: 100px;">
+    <div class="card">
+        <h2 style="text-align:center"><i class="fas fa-sun"></i> Sunny Shop Login</h2>
+        <p style="font-size: 0.8rem; text-align: center; color: #94a3b8;">*ถ้าไม่มีชื่อในระบบ จะเป็นการสมัครสมาชิกใหม่</p>
+        <input type="text" id="user-name" placeholder="ชื่อผู้ใช้งาน">
+        <input type="password" id="user-pass" placeholder="รหัสผ่าน">
+        <button class="btn btn-primary" onclick="handleAuth()">เข้าสู่ระบบ / สมัครสมาชิก</button>
+        <hr style="border: 0.5px solid #334155; margin: 20px 0;">
+        <button class="btn btn-admin" onclick="checkAdmin()">Admin Panel</button>
     </div>
-</header>
-
-<div class="container">
-    <section id="view-shop">
-        <h2 style="text-align: center; color: var(--primary); margin-bottom: 30px;">สินค้าแนะนำสำหรับคุณ</h2>
-        <div id="product-display" class="product-grid">กำลังโหลดสินค้าจากระบบกลาง...</div>
-    </section>
-
-    <section id="view-checkout" class="hidden">
-        <div style="max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
-            <h2><i class="fas fa-truck"></i> ข้อมูลการจัดส่ง</h2>
-            <input type="text" id="ship-name" placeholder="ชื่อ-นามสกุล ผู้รับ">
-            <textarea id="ship-address" placeholder="ที่อยู่จัดส่งโดยละเอียด" rows="4"></textarea>
-            <input type="tel" id="ship-phone" placeholder="เบอร์โทรศัพท์ติดต่อ">
-            <button class="btn btn-primary" onclick="processOrder()">ยืนยันสั่งซื้อสินค้า</button>
-            <button class="btn btn-secondary" onclick="showView('view-shop')">ย้อนกลับ</button>
-        </div>
-    </section>
-
-    <section id="view-admin" class="hidden">
-        <div style="max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 12px;">
-            <h2>ระบบหลังบ้าน</h2>
-            <p>เพิ่มสินค้าใหม่เข้าระบบกลาง</p>
-            <input type="text" id="new-p-name" placeholder="ชื่อสินค้า">
-            <input type="number" id="new-p-price" placeholder="ราคา (บาท)">
-            <button class="btn btn-primary" onclick="saveProduct()">บันทึกสินค้า</button>
-            <button class="btn btn-secondary" onclick="showView('view-shop')">ออกจากหน้า Admin</button>
-        </div>
-    </section>
 </div>
 
-<div id="cart-modal" class="modal hidden">
-    <div class="modal-content">
-        <h3><i class="fas fa-shopping-basket"></i> ตะกร้าของคุณ</h3>
-        <div id="cart-list" style="margin: 20px 0;"></div>
-        <hr>
-        <h4 id="cart-total" style="text-align: right; color: #c0392b;"></h4>
-        <button class="btn btn-primary" onclick="goToCheckout()">ชำระเงิน</button>
-        <button class="btn btn-secondary" onclick="closeCart()">เลือกสินค้าเพิ่ม</button>
+<div id="view-main" class="hidden">
+    <header>
+        <div>
+            <span style="font-weight: bold; font-size: 1.2rem;">ยินดีต้อนรับ, <span id="display-user"></span></span>
+        </div>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <span class="credit-badge">เครดิต: ฿<span id="display-credit">0</span></span>
+            <button class="btn btn-admin" style="background:#475569" onclick="logout()">ออก</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="card" style="border-left: 5px solid #10b981;">
+            <h3><i class="fas fa-wallet"></i> เติมเครดิต</h3>
+            <p>สถานะ: <b>ติดต่อเจ้าของร้านเพื่อเติมเงิน</b></p>
+            <p style="color: #94a3b8;">"นำเงินสดให้เจ้าของร้าน แล้วแจ้งชื่อผู้ใช้ เดี๋ยวเจ้าของจะเติมเครดิตให้ในระบบครับ"</p>
+            <div style="display: flex; gap: 10px;">
+                <input type="text" id="redeem-code-input" placeholder="ใส่โค้ดที่นี่ (ถ้ามี)" style="margin:0">
+                <button class="btn btn-primary" style="width: 120px;" onclick="redeemCode()">ใช้โค้ด</button>
+            </div>
+        </div>
+
+        <h3><i class="fas fa-gamepad"></i> รายการสินค้า/เกม</h3>
+        <div id="shop-items" class="grid"></div>
+    </div>
+</div>
+
+<div id="view-admin" class="container hidden">
+    <div class="card">
+        <h2><i class="fas fa-user-shield"></i> ระบบหลังบ้าน (แอดมิน)</h2>
+        <button class="btn btn-secondary" onclick="location.reload()" style="background:#475569; color:white">กลับหน้าหลัก</button>
+        
+        <div style="margin-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="card" style="background: #1e293b; border: 1px solid var(--accent);">
+                <h4>เสกเงินให้สมาชิก</h4>
+                <select id="admin-user-list"></select>
+                <input type="number" id="admin-amount" placeholder="จำนวนเงินที่ต้องการเสก">
+                <button class="btn btn-primary" onclick="adminAddMoney()">ยืนยันการเสกเงิน</button>
+            </div>
+
+            <div class="card" style="background: #1e293b; border: 1px solid #10b981;">
+                <h4>สร้าง Redeem Code</h4>
+                <input type="text" id="code-name" placeholder="ชื่อโค้ด (เช่น HELLO2025)">
+                <input type="number" id="code-reward" placeholder="จำนวนเงินที่จะได้รับ">
+                <input type="number" id="code-limit" placeholder="จำกัดจำนวนคนใช้">
+                <button class="btn btn-primary" style="background:#10b981; color:white" onclick="adminCreateCode()">สร้างโค้ด</button>
+            </div>
+        </div>
+
+        <h4>รายการสินค้า (จัดการร้าน)</h4>
+        <input type="text" id="new-item-name" placeholder="ชื่อเกม/สินค้า">
+        <input type="number" id="new-item-price" placeholder="ราคา">
+        <button class="btn btn-primary" onclick="adminAddItem()">เพิ่มสินค้าใหม่</button>
     </div>
 </div>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
+    import { getDatabase, ref, set, push, onValue, update, get } from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
-    // การตั้งค่า Firebase ของคุณ
+    // ใส่ Config ของคุณตรงนี้
     const firebaseConfig = {
         apiKey: "AIzaSyB2MNzL1-w1AxW5taQvyvTFJO4GkL4ucis",
         authDomain: "sunny-shop-fc134.firebaseapp.com",
@@ -105,107 +113,151 @@
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
-    const productsRef = ref(db, 'products');
+    let currentUser = null;
 
-    let allProducts = [];
-    let myCart = [];
+    // --- ระบบสมาชิก ---
+    window.handleAuth = async () => {
+        const user = document.getElementById('user-name').value;
+        const pass = document.getElementById('user-pass').value;
+        if(!user || !pass) return alert("กรุณากรอกให้ครบ");
 
-    // ดึงข้อมูลสินค้าแบบ Real-time
-    onValue(productsRef, (snapshot) => {
-        const data = snapshot.val();
-        allProducts = data ? Object.entries(data).map(([id, val]) => ({ id, ...val })) : [];
-        renderProducts();
-    });
+        const userRef = ref(db, 'users/' + user);
+        const snapshot = await get(userRef);
 
-    window.renderProducts = () => {
-        const display = document.getElementById('product-display');
-        if (allProducts.length === 0) { display.innerHTML = "<p>ยังไม่มีสินค้าในร้าน</p>"; return; }
-        
-        display.innerHTML = allProducts.map(p => `
-            <div class="product-card">
-                <h3>${p.name}</h3>
-                <p class="price">฿${p.price.toLocaleString()}</p>
-                <div style="display:flex; align-items:center; gap:10px; margin-bottom:15px;">
-                    <input type="checkbox" id="chk-${p.id}" style="width:20px; height:20px;"> <b>เลือกรายการ</b>
-                    <input type="number" id="qty-${p.id}" value="1" min="1" style="width:70px; margin:0;">
-                </div>
-                <button class="btn btn-primary" onclick="addToCart('${p.id}')">ใส่ตะกร้า</button>
-            </div>
-        `).join('');
-    };
-
-    window.saveProduct = () => {
-        const name = document.getElementById('new-p-name').value;
-        const price = document.getElementById('new-p-price').value;
-        if(name && price) {
-            push(productsRef, { name, price: parseFloat(price) });
-            alert("บันทึกสินค้าเรียบร้อย!");
-            document.getElementById('new-p-name').value = '';
-            document.getElementById('new-p-price').value = '';
+        if(snapshot.exists()) {
+            if(snapshot.val().password === pass) {
+                loginSuccess(user, snapshot.val());
+            } else {
+                alert("รหัสผ่านไม่ถูกต้อง");
+            }
+        } else {
+            // สมัครสมาชิกใหม่
+            await set(userRef, { password: pass, credit: 0 });
+            alert("สมัครสมาชิกสำเร็จ!");
+            loginSuccess(user, { credit: 0 });
         }
     };
 
-    window.addToCart = (id) => {
-        const chk = document.getElementById(`chk-${id}`);
-        const qty = parseInt(document.getElementById(`qty-${id}`).value);
-        if(!chk.checked) return alert("โปรดติ๊กถูกที่ช่องเลือกสินค้าก่อนครับ");
+    function loginSuccess(username, data) {
+        currentUser = username;
+        document.getElementById('view-login').classList.add('hidden');
+        document.getElementById('view-main').classList.remove('hidden');
+        document.getElementById('display-user').innerText = username;
         
-        const product = allProducts.find(p => p.id === id);
-        const inCart = myCart.find(item => item.id === id);
-        
-        if(inCart) inCart.qty += qty;
-        else myCart.push({ ...product, qty });
-        
-        updateCartUI();
-        alert("เพิ่มสินค้าลงตะกร้าแล้ว!");
-    };
+        // ติดตามยอดเงิน Realtime
+        onValue(ref(db, 'users/' + username + '/credit'), (snap) => {
+            document.getElementById('display-credit').innerText = snap.val() || 0;
+        });
+        loadShop();
+    }
 
-    window.updateCartUI = () => {
-        document.getElementById('cart-count').innerText = myCart.reduce((s, i) => s + i.qty, 0);
-    };
+    window.logout = () => location.reload();
 
-    window.openCart = () => {
-        const list = document.getElementById('cart-list');
-        let total = 0;
-        list.innerHTML = myCart.map(item => {
-            total += item.price * item.qty;
-            return `<div style="display:flex; justify-content:space-between; margin-bottom:10px;">
-                        <span>${item.name} x ${item.qty}</span>
-                        <span>฿${(item.price * item.qty).toLocaleString()}</span>
-                    </div>`;
-        }).join('') || "ตะกร้าว่างเปล่า";
-        document.getElementById('cart-total').innerText = "รวมเงินทั้งสิ้น: ฿" + total.toLocaleString();
-        document.getElementById('cart-modal').classList.remove('hidden');
-    };
-
-    window.closeCart = () => document.getElementById('cart-modal').classList.add('hidden');
-    
-    window.showView = (id) => {
-        document.querySelectorAll('section').forEach(s => s.classList.add('hidden'));
-        document.getElementById(id).classList.remove('hidden');
-    };
-
+    // --- ระบบแอดมิน ---
     window.checkAdmin = () => {
-        if(prompt("กรุณาใส่รหัสผ่านแอดมิน:") === "19911217") showView('view-admin');
-        else alert("รหัสผ่านไม่ถูกต้อง");
+        if(prompt("รหัสผ่านแอดมิน:") === "19911217") {
+            document.getElementById('view-login').classList.add('hidden');
+            document.getElementById('view-main').classList.add('hidden');
+            document.getElementById('view-admin').classList.remove('hidden');
+            loadAdminData();
+        } else { alert("รหัสไม่ถูกต้อง"); }
     };
 
-    window.goToCheckout = () => {
-        if(myCart.length === 0) return alert("กรุณาเลือกสินค้าก่อน");
-        closeCart();
-        showView('view-checkout');
+    function loadAdminData() {
+        onValue(ref(db, 'users'), (snap) => {
+            const list = document.getElementById('admin-user-list');
+            list.innerHTML = "";
+            Object.keys(snap.val() || {}).forEach(u => {
+                list.innerHTML += `<option value="${u}">${u} (ยอดปัจจุบัน: ฿${snap.val()[u].credit})</option>`;
+            });
+        });
+    }
+
+    window.adminAddMoney = () => {
+        const target = document.getElementById('admin-user-list').value;
+        const amount = parseFloat(document.getElementById('admin-amount').value);
+        if(!amount) return;
+        const creditRef = ref(db, `users/${target}/credit`);
+        get(creditRef).then(snap => {
+            set(creditRef, (snap.val() || 0) + amount);
+            alert(`เสกเงินให้ ${target} เรียบร้อย!`);
+        });
     };
 
-    window.processOrder = () => {
-        const name = document.getElementById('ship-name').value;
-        if(!name) return alert("กรุณากรอกชื่อผู้รับ");
-        const orderId = "SUN-" + Date.now().toString().slice(-6);
-        alert(`สั่งซื้อสำเร็จ!\nหมายเลขสั่งซื้อ: ${orderId}\nขอบคุณที่ใช้บริการ Sunny Shop`);
-        myCart = [];
-        updateCartUI();
-        showView('view-shop');
+    window.adminCreateCode = () => {
+        const name = document.getElementById('code-name').value;
+        const reward = parseFloat(document.getElementById('code-reward').value);
+        const limit = parseInt(document.getElementById('code-limit').value);
+        if(name && reward) {
+            set(ref(db, 'codes/' + name), { reward, limit, usedCount: 0 });
+            alert("สร้างโค้ดสำเร็จ!");
+        }
+    };
+
+    // --- ระบบร้านค้า & ใช้โค้ด ---
+    function loadShop() {
+        onValue(ref(db, 'items'), (snap) => {
+            const container = document.getElementById('shop-items');
+            container.innerHTML = "";
+            const data = snap.val() || {};
+            Object.entries(data).forEach(([id, item]) => {
+                container.innerHTML += `
+                    <div class="item-card">
+                        <h4>${item.name}</h4>
+                        <p style="color:var(--accent)">฿${item.price}</p>
+                        <button class="btn btn-primary" onclick="buyItem('${id}', ${item.price})">ซื้อเลย</button>
+                    </div>`;
+            });
+        });
+    }
+
+    window.adminAddItem = () => {
+        const name = document.getElementById('new-item-name').value;
+        const price = parseFloat(document.getElementById('new-item-price').value);
+        if(name && price) {
+            push(ref(db, 'items'), { name, price });
+            alert("เพิ่มสินค้าแล้ว");
+        }
+    };
+
+    window.buyItem = async (id, price) => {
+        const creditRef = ref(db, `users/${currentUser}/credit`);
+        const snap = await get(creditRef);
+        const myCredit = snap.val() || 0;
+        
+        if(myCredit >= price) {
+            await set(creditRef, myCredit - price);
+            alert("ซื้อสินค้าสำเร็จ! เครดิตถูกหักแล้ว");
+        } else {
+            alert("เครดิตไม่พอ กรุณาแจ้งเจ้าของร้านเพื่อเติมเงิน");
+        }
+    };
+
+    window.redeemCode = async () => {
+        const codeInput = document.getElementById('redeem-code-input').value;
+        if(!codeInput) return;
+        
+        const codeRef = ref(db, 'codes/' + codeInput);
+        const snap = await get(codeRef);
+        
+        if(snap.exists()) {
+            const data = snap.val();
+            if(data.usedCount < data.limit) {
+                const userCreditRef = ref(db, `users/${currentUser}/credit`);
+                const userSnap = await get(userCreditRef);
+                
+                await update(codeRef, { usedCount: data.usedCount + 1 });
+                await set(userCreditRef, (userSnap.val() || 0) + data.reward);
+                alert(`ยินดีด้วย! คุณได้รับ ฿${data.reward} จากโค้ดนี้`);
+                document.getElementById('redeem-code-input').value = "";
+            } else {
+                alert("โค้ดนี้ถูกใช้งานจนเต็มจำนวนแล้ว");
+            }
+        } else {
+            alert("ไม่พบโค้ดนี้ในระบบ");
+        }
     };
 </script>
 </body>
-                                                                                                        </html>
+                                                                     </html>
     

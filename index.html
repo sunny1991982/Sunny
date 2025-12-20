@@ -3,27 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sunny Shop - Ultimate Store</title>
+    <title>Sunny Shop - Original Style</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        :root { --main-blue: #0022ff; --main-pink: #ff00ff; --dark-bg: #0f172a; --card-bg: #1e293b; --text: #f8fafc; --accent: #fbbf24; --danger: #ef4444; }
-        body { font-family: 'Kanit', sans-serif; background: #e9ecef; margin: 0; min-height: 100vh; color: var(--text); }
+        /* กลับมาใช้โทนสีเดิมตอนแรกสุด */
+        :root { --main-blue: #0022ff; --main-pink: #ff00ff; --dark-bg: #e9ecef; --card-white: #ffffff; --text-dark: #333; --accent: #fbbf24; }
+        body { font-family: 'Kanit', sans-serif; background: var(--dark-bg); margin: 0; min-height: 100vh; color: var(--text-dark); }
         .hidden { display: none !important; }
         .container { padding: 2rem 5%; max-width: 1000px; margin: auto; }
+        
+        /* LOGIN UI แบบขาวสะอาด */
         .auth-card { background: white; width: 90%; max-width: 400px; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 2px solid var(--main-blue); text-align: center; color: #333; margin: 100px auto; }
         .input-group { text-align: left; margin-bottom: 15px; position: relative; }
         .input-group input, .magic-input { width: 100%; padding: 12px 12px 12px 40px; border: 1px solid #ddd; border-radius: 10px; background: #fdfdfd; box-sizing: border-box; font-size: 1rem; color: #333; }
-        .magic-input { color: white; background: #0f172a; border-color: #334155; }
         .input-group i { position: absolute; left: 15px; bottom: 12px; color: var(--main-blue); }
-        .btn-submit { background: var(--main-blue); color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; }
-        header { background: var(--card-bg); padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--main-blue); }
-        .user-info-card { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); border-radius: 15px; padding: 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .card { background: var(--card-bg); border-radius: 15px; padding: 20px; margin-bottom: 20px; border: 1px solid #334155; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
-        .product-card { background: #0f172a; padding: 15px; border-radius: 12px; border: 1px solid #334155; text-align: center; }
-        table { width: 100%; border-collapse: collapse; background: #1e293b; }
-        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #334155; }
+        
+        /* UI หน้าร้านแบบขาวเดิม */
+        header { background: #1e293b; padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; color: white; }
+        .user-info-card { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); border-radius: 15px; padding: 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; color: white; }
+        .card { background: white; border-radius: 15px; padding: 20px; margin-bottom: 20px; border: 1px solid #ddd; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .btn-submit { background: var(--main-blue); color: white; border: none; padding: 12px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 20px; }
+        .product-card { background: white; padding: 15px; border-radius: 12px; border: 1px solid #ddd; text-align: center; color: #333; }
+        
+        /* ADMIN UI (สีดำตามเดิม) */
+        #view-admin { background: #000; color: white; }
+        .admin-card { background: #111; border: 1px solid #333; border-radius: 15px; padding: 15px; margin-bottom: 15px; }
+        .admin-input { background: #000; color: white; border: 1px solid #444; width: 100%; padding: 10px; border-radius: 5px; margin-bottom: 10px; }
+        table { width: 100%; color: white; border-collapse: collapse; }
+        th, td { border-bottom: 1px solid #333; padding: 10px; text-align: left; }
     </style>
 </head>
 <body>
@@ -40,69 +49,73 @@
     </div>
 </div>
 
-<div id="view-main" class="hidden" style="background: var(--dark-bg); min-height: 100vh;">
+<div id="view-main" class="hidden">
     <header>
         <h3 style="margin:0;"><i class="fas fa-sun"></i> Sunny Shop</h3>
-        <button onclick="location.reload()" style="background:none; border:none; color:white; cursor:pointer;"><i class="fas fa-power-off"></i> ออก</button>
+        <button onclick="location.reload()" style="background:none; border:none; color:white; cursor:pointer;"><i class="fas fa-power-off"></i></button>
     </header>
     <div class="container">
         <div class="user-info-card">
-            <div><small>บัญชี:</small><h2 id="display-user">-</h2></div>
-            <div style="text-align:right;"><small>เงิน:</small><h2 style="color:var(--accent);">฿ <span id="display-credit">0</span></h2></div>
+            <div><small>บัญชี:</small><h2 id="display-user" style="margin:0;">-</h2></div>
+            <div style="text-align:right;"><small>เงิน:</small><h2 style="color:var(--accent); margin:0;">฿ <span id="display-credit">0</span></h2></div>
         </div>
 
-        <div class="card" style="border-left: 5px solid var(--accent);">
-            <h4 style="margin:0 0 10px 0;">เติมโค้ดรับรางวัล</h4>
-            <div style="display:flex; gap:10px;">
-                <input type="text" id="redeem-input" class="magic-input" placeholder="ใส่โค้ดที่นี่..." style="margin:0; padding-left:15px;">
-                <button class="btn-submit" style="width:100px; background:var(--accent); color:black;" onclick="useRedeemCode()">ใช้โค้ด</button>
-            </div>
-        </div>
+        <button class="btn-submit" style="margin-bottom:20px; background:var(--main-pink);" onclick="claimDaily()">
+            <i class="fas fa-gift"></i> รับเงินฟรีรายวัน (฿0.5)
+        </button>
 
-        <div class="card" style="border: 2px solid #ef4444; background: #2d1b1b; text-align:center;">
-            <h3 style="color: #ef4444;"><i class="fas fa-dice"></i> Gacha 1 บาท (เกลือ 99%)</h3>
-            <p>โอกาส 1% ได้รับ <b style="color:var(--accent);">฿5</b></p>
+        <div class="card" style="border: 2px solid #ef4444; text-align:center;">
+            <h3 style="color: #ef4444; margin:0;"><i class="fas fa-dice"></i> Gacha 1 บาท (เกลือ 99%)</h3>
+            <p style="color:#666;">โอกาส 1% ได้รับ ฿5</p>
             <button class="btn-submit" style="background: #ef4444; width: 150px; margin: auto;" onclick="playGacha()">สุ่มเลย!</button>
         </div>
 
-        <h3>สินค้า (ซื้อแล้วของหายทันที)</h3>
+        <h3>สินค้ามาใหม่ (ซื้อแล้วของหายทันที)</h3>
         <div id="product-list" class="grid"></div>
 
         <div class="card" style="margin-top:30px;">
-            <h3><i class="fas fa-history"></i> ประวัติ/รหัสที่ซื้อไป</h3>
-            <div id="history-list">ไม่มีข้อมูล</div>
+            <h3><i class="fas fa-history"></i> ประวัติ/รหัสที่ซื้อ</h3>
+            <div id="history-list" style="color:#555;">ยังไม่มีข้อมูล</div>
         </div>
     </div>
 </div>
 
-<div id="view-admin" class="hidden" style="background: #000; min-height: 100vh; color: white;">
+<div id="view-admin" class="hidden">
     <div class="container">
         <h1>Admin Control</h1>
         <button onclick="location.reload()" class="btn-submit" style="background:#333; width:auto; margin-bottom:20px;">กลับ</button>
+        
         <div class="grid">
-            <div class="card">
-                <h4>เสกเงิน</h4>
-                <select id="adm-user-sel" class="magic-input" style="padding-left:10px;"></select>
-                <input type="number" id="adm-money" class="magic-input" placeholder="จำนวนเงิน" style="margin-top:10px;">
-                <button class="btn-submit" style="margin-top:10px;" onclick="adminAddMoney()">เสก!</button>
+            <div class="admin-card">
+                <h4>เสกเงิน & ล็อกแจ็คพอต</h4>
+                <select id="adm-user-sel" class="admin-input"></select>
+                <div style="display:flex; gap:5px;">
+                    <button onclick="quickAdd(10)" style="background:green; color:white; flex:1;">+10</button>
+                    <button onclick="quickAdd(20)" style="background:blue; color:white; flex:1;">+20</button>
+                </div>
+                <button onclick="setJackpotTarget()" class="btn-submit" style="margin-top:10px; background:var(--main-pink); font-size:12px;">ล็อกให้คนนี้สุ่มชนะ</button>
             </div>
-            <div class="card">
-                <h4>ลงของใหม่</h4>
-                <input type="text" id="adm-p-name" class="magic-input" placeholder="ชื่อสินค้า">
-                <input type="number" id="adm-p-price" class="magic-input" placeholder="ราคา">
-                <input type="text" id="adm-p-code" class="magic-input" placeholder="รหัสลับ (รหัสบัตร)">
-                <button class="btn-submit" style="margin-top:10px; background:var(--accent); color:black;" onclick="adminAddP()">ลงขาย</button>
-            </div>
-            <div class="card">
-                <h4>สร้าง Redeem Code</h4>
-                <input type="text" id="adm-c-name" class="magic-input" placeholder="ชื่อโค้ด (เช่น GIFT50)">
-                <input type="number" id="adm-c-reward" class="magic-input" placeholder="เงินรางวัล">
-                <input type="number" id="adm-c-limit" class="magic-input" placeholder="จำนวนคนใช้ได้">
-                <button class="btn-submit" style="margin-top:10px; background:var(--main-pink);" onclick="adminCreateCode()">สร้างโค้ด</button>
+
+            <div class="admin-card">
+                <h4>สมุดจดแอดมิน (จดหนี้เพื่อน)</h4>
+                <textarea id="adm-note" class="admin-input" style="height:80px;" placeholder="จดชื่อคนค้างเงินสด..."></textarea>
+                <button onclick="saveNote()" class="btn-submit" style="padding:5px;">บันทึก</button>
             </div>
         </div>
-        <div class="card"><h4>จัดการสมาชิก</h4><div id="adm-user-table"></div></div>
-        <div class="card"><h4>สต็อกสินค้า</h4><div id="adm-p-table"></div></div>
+
+        <div class="admin-card">
+            <h4>รายชื่อสมาชิก & ยอดเงิน (Spy Mode)</h4>
+            <div id="adm-user-table" style="font-size:12px;"></div>
+        </div>
+
+        <div class="admin-card">
+            <h4>ลงสินค้า</h4>
+            <input type="text" id="adm-p-name" class="admin-input" placeholder="ชื่อสินค้า">
+            <input type="number" id="adm-p-price" class="admin-input" placeholder="ราคา">
+            <input type="text" id="adm-p-code" class="admin-input" placeholder="รหัสลับ">
+            <button onclick="adminAddP()" class="btn-submit" style="background:var(--accent); color:black;">ลงขาย</button>
+            <div id="adm-p-table" style="margin-top:10px;"></div>
+        </div>
     </div>
 </div>
 
@@ -124,7 +137,6 @@
     const db = getDatabase(app);
     let currentU = null;
 
-    // AUTH
     window.handleAuth = async () => {
         const u = document.getElementById('auth-user').value.trim();
         const p = document.getElementById('auth-pass').value.trim();
@@ -132,9 +144,9 @@
         const uRef = ref(db, 'users/'+u);
         const s = await get(uRef);
         if(s.exists()){
-            if(s.val().password === p) start(u); else alert("รหัสผ่านผิด");
+            if(s.val().password === p) start(u); else alert("รหัสผิด");
         } else {
-            await set(uRef, {password:p, credit:0}); start(u);
+            await set(uRef, {password:p, credit:0, lastDaily: ""}); start(u);
         }
     };
 
@@ -147,12 +159,35 @@
         loadProducts(); loadHistory();
     }
 
-    // SHOP & GACHA
+    // Daily Reward
+    window.claimDaily = async () => {
+        const uRef = ref(db, `users/${currentU}`);
+        const s = await get(uRef);
+        const today = new Date().toDateString();
+        if(s.val().lastDaily === today) return alert("วันนี้รับไปแล้ว");
+        await update(uRef, { credit: (s.val().credit || 0) + 0.5, lastDaily: today });
+        alert("ได้รับ 0.5 บาท!");
+    };
+
+    // Gacha + Jackpot Target
+    window.playGacha = async () => {
+        const cRef = ref(db, `users/${currentU}/credit`);
+        const s = await get(cRef);
+        if((s.val()||0) < 1) return alert("เงินไม่พอ");
+        await set(cRef, s.val() - 1);
+        const jpS = await get(ref(db, 'admin/jackpotTarget'));
+        const win = (jpS.val() === currentU || Math.random() * 100 > 99) ? 5 : 0;
+        if(jpS.val() === currentU) await set(ref(db, 'admin/jackpotTarget'), ""); 
+        await set(cRef, (s.val() - 1) + win);
+        await push(ref(db, `history/${currentU}`), {type:"Gacha", detail:win>0?"ได้รางวัล 5 บาท":"เกลือ", date:new Date().toLocaleString()});
+        alert(win>0 ? "ยินดีด้วย! ได้ 5 บาท" : "เกลือ!");
+    };
+
     function loadProducts() {
         onValue(ref(db, 'items'), snap => {
             const list = document.getElementById('product-list'); list.innerHTML = "";
             Object.entries(snap.val() || {}).forEach(([id, p]) => {
-                list.innerHTML += `<div class="product-card"><h4>${p.name}</h4><p style="color:var(--accent)">฿${p.price}</p><button class="btn-submit" onclick="buyItem('${id}','${p.name}',${p.price},'${p.secret}')">ซื้อ</button></div>`;
+                list.innerHTML += `<div class="product-card"><h4>${p.name}</h4><p style="color:blue">฿${p.price}</p><button class="btn-submit" onclick="buyItem('${id}','${p.name}',${p.price},'${p.secret}')">ซื้อ</button></div>`;
             });
         });
     }
@@ -160,51 +195,21 @@
     window.buyItem = async (id, name, prc, sec) => {
         const cRef = ref(db, `users/${currentU}/credit`);
         const s = await get(cRef);
-        const credit = s.val() || 0;
-        if(credit >= prc) {
-            if(confirm("ยืนยันซื้อ? (ของจะหายไปทันที)")) {
-                await set(cRef, credit - prc);
+        if((s.val()||0) >= prc) {
+            if(confirm("ซื้อแล้วหายทันที ยืนยันไหม?")) {
+                await set(cRef, s.val() - prc);
                 await push(ref(db, `history/${currentU}`), {type:"ซื้อสินค้า", detail:name, code:sec, date:new Date().toLocaleString()});
-                await set(ref(db, 'items/' + id), null); alert("สำเร็จ! ดูรหัสในประวัติ");
+                await set(ref(db, 'items/' + id), null);
+                alert("สำเร็จ! ดูรหัสในประวัติ");
             }
         } else alert("เงินไม่พอ");
-    };
-
-    window.playGacha = async () => {
-        const cRef = ref(db, `users/${currentU}/credit`);
-        const s = await get(cRef);
-        const credit = s.val() || 0;
-        if(credit < 1) return alert("เงินไม่พอสุ่ม");
-        await set(cRef, credit - 1);
-        const win = Math.random() * 100 > 99 ? 5 : 0;
-        await set(cRef, (credit - 1) + win);
-        await push(ref(db, `history/${currentU}`), {type:"Gacha", detail:win>0?"ได้รับ ฿5":"เกลือ 99%", date:new Date().toLocaleString()});
-        alert(win>0 ? "ยินดีด้วย! ได้ ฿5" : "เกลือออ!");
-    };
-
-    // REDEEM (ลูกค้าใช้)
-    window.useRedeemCode = async () => {
-        const val = document.getElementById('redeem-input').value.trim();
-        if(!val) return;
-        const cRef = ref(db, 'codes/' + val);
-        const s = await get(cRef);
-        if(s.exists() && s.val().usedCount < s.val().limit) {
-            const uRef = ref(db, `users/${currentU}/credit`);
-            const uS = await get(uRef);
-            await update(cRef, {usedCount: s.val().usedCount + 1});
-            await set(uRef, (uS.val()||0) + s.val().reward);
-            await push(ref(db, `history/${currentU}`), {type:"ใช้โค้ด", detail:`เติมโค้ด ${val} สำเร็จ`, date:new Date().toLocaleString()});
-            alert("สำเร็จ! ได้เงิน ฿" + s.val().reward);
-            document.getElementById('redeem-input').value = "";
-        } else alert("โค้ดผิดหรือเต็มแล้ว");
     };
 
     function loadHistory() {
         onValue(ref(db, `history/${currentU}`), s => {
             document.getElementById('history-list').innerHTML = Object.values(s.val()||{}).reverse().map(h => `
-                <div style="border-bottom:1px solid #334155; padding:10px 0;">
-                    <small>${h.date}</small> - <b>${h.type}</b>: ${h.detail}
-                    ${h.code ? `<div style="color:var(--accent); background:#000; padding:5px; border:1px dashed">รหัส: ${h.code}</div>`:""}
+                <div style="border-bottom:1px solid #ddd; padding:5px 0;">
+                    <b>${h.type}:</b> ${h.detail} ${h.code ? `<br><span style="color:blue">รหัส: ${h.code}</span>`:""}
                 </div>`).join('');
         });
     }
@@ -223,39 +228,28 @@
             document.getElementById('adm-user-table').innerHTML = `<table><tr><th>ชื่อ</th><th>เงิน</th><th>ลบ</th></tr>` + 
                 Object.entries(d).map(([u, i]) => `<tr><td>${u}</td><td>฿${i.credit}</td><td><button onclick="admDelU('${u}')" style="background:red; color:white;">ลบ</button></td></tr>`).join('') + `</table>`;
         });
+        get(ref(db, 'admin/note')).then(s => { if(s.exists()) document.getElementById('adm-note').value = s.val(); });
         onValue(ref(db, 'items'), s => {
             document.getElementById('adm-p-table').innerHTML = `<table><tr><th>ของ</th><th>ราคา</th><th>ลบ</th></tr>` + 
-                Object.entries(s.val()||{}).map(([id, p]) => `<tr><td>${p.name}</td><td>฿${p.price}</td><td><button onclick="admDelP('${id}')" style="background:red; color:white;">ลบ</button></td></tr>`).join('') + `</table>`;
+                Object.entries(s.val()||{}).map(([id, p]) => `<tr><td>${p.name}</td><td>${p.price}</td><td><button onclick="admDelP('${id}')">X</button></td></tr>`).join('') + `</table>`;
         });
     }
 
-    window.adminAddMoney = async () => {
+    window.quickAdd = async (amt) => {
         const u = document.getElementById('adm-user-sel').value;
-        const a = parseFloat(document.getElementById('adm-money').value);
         const s = await get(ref(db, `users/${u}/credit`));
-        await set(ref(db, `users/${u}/credit`), (s.val()||0)+a); alert("เสกแล้ว!");
+        await set(ref(db, `users/${u}/credit`), (s.val()||0)+amt); alert("เติมแล้ว!");
     };
-
+    window.saveNote = () => { set(ref(db, 'admin/note'), document.getElementById('adm-note').value); alert("จดแล้ว!"); };
+    window.setJackpotTarget = () => { set(ref(db, 'admin/jackpotTarget'), document.getElementById('adm-user-sel').value); alert("ล็อกดวงสำเร็จ!"); };
     window.adminAddP = () => {
         const n = document.getElementById('adm-p-name').value;
         const p = parseFloat(document.getElementById('adm-p-price').value);
         const s = document.getElementById('adm-p-code').value;
         if(n && p && s) push(ref(db, 'items'), {name:n, price:p, secret:s});
     };
-
-    window.adminCreateCode = () => {
-        const n = document.getElementById('adm-c-name').value;
-        const r = parseFloat(document.getElementById('adm-c-reward').value);
-        const l = parseInt(document.getElementById('adm-c-limit').value);
-        if(n && r && l) {
-            set(ref(db, 'codes/' + n), {reward: r, limit: l, usedCount: 0});
-            alert("สร้างโค้ดสำเร็จ!");
-        }
-    };
-
     window.admDelU = (u) => { if(confirm("ลบ?")) set(ref(db, 'users/'+u), null); };
     window.admDelP = (id) => { if(confirm("ลบ?")) set(ref(db, 'items/'+id), null); };
 </script>
 </body>
-                                                                                                     </html>
-    
+</html>

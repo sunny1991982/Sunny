@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sunny Shop - Global Game Store</title>
+    <title>Sunny Shop - Ultimate Store</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
@@ -11,29 +11,19 @@
         body { font-family: 'Kanit', sans-serif; background: #e9ecef; margin: 0; min-height: 100vh; color: var(--text); }
         .hidden { display: none !important; }
         .container { padding: 2rem 5%; max-width: 1000px; margin: auto; }
-        
-        /* UI Elements */
         .auth-card { background: white; width: 90%; max-width: 400px; padding: 30px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); border: 2px solid var(--main-blue); text-align: center; color: #333; margin: 100px auto; }
         .input-group { text-align: left; margin-bottom: 15px; position: relative; }
-        .input-group label { display: block; font-weight: bold; color: var(--main-blue); margin-bottom: 5px; }
         .input-group input, .magic-input { width: 100%; padding: 12px 12px 12px 40px; border: 1px solid #ddd; border-radius: 10px; background: #fdfdfd; box-sizing: border-box; font-size: 1rem; color: #333; }
         .magic-input { color: white; background: #0f172a; border-color: #334155; }
         .input-group i { position: absolute; left: 15px; bottom: 12px; color: var(--main-blue); }
         .btn-submit { background: var(--main-blue); color: white; border: none; padding: 15px; width: 100%; border-radius: 10px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px; transition: 0.3s; }
-        .btn-submit:hover { opacity: 0.8; transform: scale(1.02); }
-        
         header { background: var(--card-bg); padding: 1rem 5%; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--main-blue); }
-        .user-info-card { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); border-radius: 15px; padding: 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
+        .user-info-card { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); border-radius: 15px; padding: 20px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
         .card { background: var(--card-bg); border-radius: 15px; padding: 20px; margin-bottom: 20px; border: 1px solid #334155; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
-        .product-card { background: #0f172a; padding: 15px; border-radius: 12px; border: 1px solid #334155; text-align: center; transition: 0.3s; }
-        .product-card:hover { border-color: var(--accent); transform: translateY(-5px); }
-        
-        /* Admin Table */
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; background: #1e293b; border-radius: 10px; overflow: hidden; }
-        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #334155; }
-        th { background: #334155; color: var(--accent); }
-        .btn-sm { padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer; color: white; font-size: 0.8rem; margin-right: 5px; }
+        .product-card { background: #0f172a; padding: 15px; border-radius: 12px; border: 1px solid #334155; text-align: center; }
+        table { width: 100%; border-collapse: collapse; background: #1e293b; }
+        th, td { padding: 10px; text-align: left; border-bottom: 1px solid #334155; }
     </style>
 </head>
 <body>
@@ -41,93 +31,78 @@
 <div id="view-login">
     <div class="auth-card">
         <div style="font-size: 50px; color: var(--accent);"><i class="fas fa-sun"></i></div>
-        <h2 style="margin:0;">Sunny Shop</h2>
-        <p style="color:var(--main-pink); font-weight:bold; font-size: 0.8rem; margin-bottom: 20px;">สุ่มเกม เติมโค้ด ระบบอัตโนมัติ 24 ชม.</p>
-        <div class="input-group">
-            <label>ชื่อผู้ใช้</label>
-            <i class="fas fa-user-circle"></i>
-            <input type="text" id="auth-user" placeholder="กรอกชื่อผู้ใช้งาน">
-        </div>
-        <div class="input-group">
-            <label>รหัสผ่าน</label>
-            <i class="fas fa-key"></i>
-            <input type="password" id="auth-pass" placeholder="กรอกรหัสผ่าน">
-        </div>
-        <button class="btn-submit" onclick="handleAuth()">
-            <i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ / สมัครสมาชิก
-        </button>
-        <p onclick="checkAdmin()" style="color: #ccc; font-size: 11px; cursor: pointer; margin-top: 25px; opacity: 0.5;">[ ADMIN ACCESS ]</p>
+        <h2>Sunny Shop</h2>
+        <p style="color:var(--main-pink); font-weight:bold;">ยินดีต้อนรับสู่ร้านค้าอัตโนมัติ</p>
+        <div class="input-group"><i class="fas fa-user-circle"></i><input type="text" id="auth-user" placeholder="ชื่อผู้ใช้งาน"></div>
+        <div class="input-group"><i class="fas fa-key"></i><input type="password" id="auth-pass" placeholder="รหัสผ่าน"></div>
+        <button class="btn-submit" onclick="handleAuth()">เข้าสู่ระบบ / สมัครสมาชิก</button>
+        <p onclick="checkAdmin()" style="color: #ccc; font-size: 11px; cursor: pointer; margin-top: 25px;">[ ADMIN ]</p>
     </div>
 </div>
 
 <div id="view-main" class="hidden" style="background: var(--dark-bg); min-height: 100vh;">
     <header>
         <h3 style="margin:0;"><i class="fas fa-sun"></i> Sunny Shop</h3>
-        <button onclick="location.reload()" style="background:#475569; border:none; color:white; cursor:pointer; padding: 5px 15px; border-radius: 5px;"><i class="fas fa-power-off"></i> ออกจากระบบ</button>
+        <button onclick="location.reload()" style="background:none; border:none; color:white; cursor:pointer;"><i class="fas fa-power-off"></i> ออก</button>
     </header>
-
     <div class="container">
         <div class="user-info-card">
-            <div><small style="opacity:0.8;">ยินดีต้อนรับ</small><h2 id="display-user" style="margin:0;">-</h2></div>
-            <div style="text-align:right;"><small style="opacity:0.8;">เงินในกระเป๋า</small><h2 style="margin:0; color:var(--accent);">฿ <span id="display-credit">0</span></h2></div>
+            <div><small>บัญชี:</small><h2 id="display-user">-</h2></div>
+            <div style="text-align:right;"><small>เงิน:</small><h2 style="color:var(--accent);">฿ <span id="display-credit">0</span></h2></div>
         </div>
 
-        <div class="card" style="border: 2px solid #ef4444; background: linear-gradient(45deg, #2d1b1b, #0f172a); text-align:center;">
-            <h3 style="margin-top:0; color: #ef4444;"><i class="fas fa-dice"></i> Sunny Gacha (สุ่มละ 1 บาท)</h3>
-            <p style="color: #94a3b8; font-size: 0.9rem;">ลุ้นรับ 10 บาท | <b style="color:var(--danger);">อัตราเกลือ 92%</b></p>
-            <button class="btn-submit" style="background: #ef4444; width: 180px; margin: auto;" onclick="playGacha()">
-                <i class="fas fa-play"></i> สุ่มเลย ฿1
-            </button>
-        </div>
-
-        <div class="card">
-            <h4 style="margin-top:0;"><i class="fas fa-ticket-alt"></i> เติมโค้ดรับเครดิต</h4>
+        <div class="card" style="border-left: 5px solid var(--accent);">
+            <h4 style="margin:0 0 10px 0;">เติมโค้ดรับรางวัล</h4>
             <div style="display:flex; gap:10px;">
-                <input type="text" id="redeem-input" class="magic-input" placeholder="ใส่โค้ดที่แอดมินแจก..." style="padding-left:15px; margin:0;">
-                <button class="btn-submit" style="width:120px; background:var(--accent); color:black;" onclick="useCode()">ใช้โค้ด</button>
+                <input type="text" id="redeem-input" class="magic-input" placeholder="ใส่โค้ดที่นี่..." style="margin:0; padding-left:15px;">
+                <button class="btn-submit" style="width:100px; background:var(--accent); color:black;" onclick="useRedeemCode()">ใช้โค้ด</button>
             </div>
         </div>
 
-        <h3 style="border-left: 4px solid var(--main-blue); padding-left: 10px;">สินค้าแนะนำ</h3>
+        <div class="card" style="border: 2px solid #ef4444; background: #2d1b1b; text-align:center;">
+            <h3 style="color: #ef4444;"><i class="fas fa-dice"></i> Gacha 1 บาท (เกลือ 99%)</h3>
+            <p>โอกาส 1% ได้รับ <b style="color:var(--accent);">฿5</b></p>
+            <button class="btn-submit" style="background: #ef4444; width: 150px; margin: auto;" onclick="playGacha()">สุ่มเลย!</button>
+        </div>
+
+        <h3>สินค้า (ซื้อแล้วของหายทันที)</h3>
         <div id="product-list" class="grid"></div>
 
         <div class="card" style="margin-top:30px;">
-            <h3><i class="fas fa-history"></i> ประวัติการซื้อ & รหัสที่ได้รับ</h3>
-            <div id="history-list" style="max-height: 400px; overflow-y: auto;">ยังไม่มีรายการ</div>
+            <h3><i class="fas fa-history"></i> ประวัติ/รหัสที่ซื้อไป</h3>
+            <div id="history-list">ไม่มีข้อมูล</div>
         </div>
     </div>
 </div>
 
 <div id="view-admin" class="hidden" style="background: #000; min-height: 100vh; color: white;">
     <div class="container">
-        <h1><i class="fas fa-user-shield"></i> Master Control Panel</h1>
-        <button onclick="location.reload()" class="btn-submit" style="background:#333; width:auto; margin-bottom:20px;">กลับหน้าหลัก</button>
-        
+        <h1>Admin Control</h1>
+        <button onclick="location.reload()" class="btn-submit" style="background:#333; width:auto; margin-bottom:20px;">กลับ</button>
         <div class="grid">
             <div class="card">
-                <h4><i class="fas fa-magic"></i> เสกเครดิต</h4>
+                <h4>เสกเงิน</h4>
                 <select id="adm-user-sel" class="magic-input" style="padding-left:10px;"></select>
-                <input type="number" id="adm-money" class="magic-input" placeholder="จำนวนเงิน" style="margin-top:10px; padding-left:10px;">
-                <button class="btn-submit" style="margin-top:10px;" onclick="adminAddMoney()">ยืนยันการเสกเงิน</button>
+                <input type="number" id="adm-money" class="magic-input" placeholder="จำนวนเงิน" style="margin-top:10px;">
+                <button class="btn-submit" style="margin-top:10px;" onclick="adminAddMoney()">เสก!</button>
             </div>
             <div class="card">
-                <h4><i class="fas fa-plus-circle"></i> เพิ่มสินค้าใหม่</h4>
-                <input type="text" id="adm-p-name" class="magic-input" placeholder="ชื่อสินค้า (เช่น บัตรเติมเกม)" style="padding-left:10px;">
-                <input type="number" id="adm-p-price" class="magic-input" placeholder="ราคา (บาท)" style="margin-top:10px; padding-left:10px;">
-                <input type="text" id="adm-p-code" class="magic-input" placeholder="รหัสลับ (จะเห็นหลังซื้อ)" style="margin-top:10px; padding-left:10px;">
-                <button class="btn-submit" style="margin-top:10px; background:var(--accent); color:black;" onclick="adminAddP()">ลงขายสินค้า</button>
+                <h4>ลงของใหม่</h4>
+                <input type="text" id="adm-p-name" class="magic-input" placeholder="ชื่อสินค้า">
+                <input type="number" id="adm-p-price" class="magic-input" placeholder="ราคา">
+                <input type="text" id="adm-p-code" class="magic-input" placeholder="รหัสลับ (รหัสบัตร)">
+                <button class="btn-submit" style="margin-top:10px; background:var(--accent); color:black;" onclick="adminAddP()">ลงขาย</button>
+            </div>
+            <div class="card">
+                <h4>สร้าง Redeem Code</h4>
+                <input type="text" id="adm-c-name" class="magic-input" placeholder="ชื่อโค้ด (เช่น GIFT50)">
+                <input type="number" id="adm-c-reward" class="magic-input" placeholder="เงินรางวัล">
+                <input type="number" id="adm-c-limit" class="magic-input" placeholder="จำนวนคนใช้ได้">
+                <button class="btn-submit" style="margin-top:10px; background:var(--main-pink);" onclick="adminCreateCode()">สร้างโค้ด</button>
             </div>
         </div>
-
-        <div class="card">
-            <h4><i class="fas fa-users"></i> จัดการสมาชิก</h4>
-            <div id="adm-user-table" style="overflow-x:auto;"></div>
-        </div>
-        
-        <div class="card" style="border-color: var(--danger);">
-            <h4><i class="fas fa-box-open"></i> จัดการคลังสินค้า</h4>
-            <div id="adm-p-table" style="overflow-x:auto;"></div>
-        </div>
+        <div class="card"><h4>จัดการสมาชิก</h4><div id="adm-user-table"></div></div>
+        <div class="card"><h4>สต็อกสินค้า</h4><div id="adm-p-table"></div></div>
     </div>
 </div>
 
@@ -149,26 +124,21 @@
     const db = getDatabase(app);
     let currentU = null;
 
-    // --- ระบบยืนยันตัวตน ---
+    // AUTH
     window.handleAuth = async () => {
         const u = document.getElementById('auth-user').value.trim();
         const p = document.getElementById('auth-pass').value.trim();
-        if(!u || !p) return alert("กรุณากรอกข้อมูลให้ครบ");
-        
-        const uRef = ref(db, 'users/' + u);
+        if(!u || !p) return;
+        const uRef = ref(db, 'users/'+u);
         const s = await get(uRef);
-        
         if(s.exists()){
-            if(s.val().password === p) startSession(u); 
-            else alert("รหัสผ่านไม่ถูกต้อง");
+            if(s.val().password === p) start(u); else alert("รหัสผ่านผิด");
         } else {
-            await set(uRef, {password: p, credit: 0});
-            alert("สมัครสมาชิกใหม่สำเร็จ!");
-            startSession(u);
+            await set(uRef, {password:p, credit:0}); start(u);
         }
     };
 
-    function startSession(u) {
+    function start(u) {
         currentU = u;
         document.getElementById('view-login').classList.add('hidden');
         document.getElementById('view-main').classList.remove('hidden');
@@ -177,18 +147,12 @@
         loadProducts(); loadHistory();
     }
 
-    // --- ระบบร้านค้า ---
+    // SHOP & GACHA
     function loadProducts() {
         onValue(ref(db, 'items'), snap => {
-            const list = document.getElementById('product-list');
-            list.innerHTML = "";
+            const list = document.getElementById('product-list'); list.innerHTML = "";
             Object.entries(snap.val() || {}).forEach(([id, p]) => {
-                list.innerHTML += `
-                <div class="product-card">
-                    <h4 style="margin-bottom:5px;">${p.name}</h4>
-                    <p style="color:var(--accent); font-size:1.2rem; font-weight:bold; margin:10px 0;">฿${p.price}</p>
-                    <button class="btn-submit" style="padding:10px;" onclick="buyItem('${id}','${p.name}',${p.price},'${p.secret}')">ซื้อตอนนี้</button>
-                </div>`;
+                list.innerHTML += `<div class="product-card"><h4>${p.name}</h4><p style="color:var(--accent)">฿${p.price}</p><button class="btn-submit" onclick="buyItem('${id}','${p.name}',${p.price},'${p.secret}')">ซื้อ</button></div>`;
             });
         });
     }
@@ -196,112 +160,102 @@
     window.buyItem = async (id, name, prc, sec) => {
         const cRef = ref(db, `users/${currentU}/credit`);
         const s = await get(cRef);
-        if((s.val()||0) >= prc) {
-            if(confirm(`ยืนยันการซื้อ ${name} ราคา ${prc} บาท?`)) {
-                await set(cRef, s.val() - prc);
+        const credit = s.val() || 0;
+        if(credit >= prc) {
+            if(confirm("ยืนยันซื้อ? (ของจะหายไปทันที)")) {
+                await set(cRef, credit - prc);
                 await push(ref(db, `history/${currentU}`), {type:"ซื้อสินค้า", detail:name, code:sec, date:new Date().toLocaleString()});
-                alert("ซื้อสำเร็จ! กรุณาตรวจสอบรหัสที่เมนู 'ประวัติการซื้อ'");
+                await set(ref(db, 'items/' + id), null); alert("สำเร็จ! ดูรหัสในประวัติ");
             }
-        } else alert("เครดิตคงเหลือไม่เพียงพอ");
+        } else alert("เงินไม่พอ");
     };
 
-    // --- ระบบ Gacha (฿1, Salt 92%) ---
     window.playGacha = async () => {
         const cRef = ref(db, `users/${currentU}/credit`);
         const s = await get(cRef);
-        if((s.val()||0) < 1) return alert("เครดิตไม่พอสุ่ม");
-        
-        await set(cRef, s.val() - 1);
-        const rand = Math.random() * 100;
-        let win = 0;
-        if(rand > 92) win = 10;
-        else if(rand > 80) win = 2;
-        
-        await set(cRef, (s.val() - 1) + win);
-        await push(ref(db, `history/${currentU}`), {type:"Gacha", detail:win>0?`ได้รับรางวัล ฿${win}`:`เกลือ (ไม่ได้รางวัล)`, date:new Date().toLocaleString()});
-        alert(win > 0 ? `ยินดีด้วย! คุณได้รับเงิน ฿${win}` : "เสียใจด้วย... คุณเกลือ!");
+        const credit = s.val() || 0;
+        if(credit < 1) return alert("เงินไม่พอสุ่ม");
+        await set(cRef, credit - 1);
+        const win = Math.random() * 100 > 99 ? 5 : 0;
+        await set(cRef, (credit - 1) + win);
+        await push(ref(db, `history/${currentU}`), {type:"Gacha", detail:win>0?"ได้รับ ฿5":"เกลือ 99%", date:new Date().toLocaleString()});
+        alert(win>0 ? "ยินดีด้วย! ได้ ฿5" : "เกลือออ!");
     };
 
-    // --- ระบบใช้โค้ด ---
-    window.useCode = async () => {
+    // REDEEM (ลูกค้าใช้)
+    window.useRedeemCode = async () => {
         const val = document.getElementById('redeem-input').value.trim();
         if(!val) return;
-        const codeRef = ref(db, 'codes/' + val);
-        const s = await get(codeRef);
+        const cRef = ref(db, 'codes/' + val);
+        const s = await get(cRef);
         if(s.exists() && s.val().usedCount < s.val().limit) {
-            const uCRef = ref(db, `users/${currentU}/credit`);
-            const uS = await get(uCRef);
-            await update(codeRef, {usedCount: s.val().usedCount + 1});
-            await set(uCRef, (uS.val()||0) + s.val().reward);
-            alert("สำเร็จ! ได้รับรางวัล ฿" + s.val().reward);
+            const uRef = ref(db, `users/${currentU}/credit`);
+            const uS = await get(uRef);
+            await update(cRef, {usedCount: s.val().usedCount + 1});
+            await set(uRef, (uS.val()||0) + s.val().reward);
+            await push(ref(db, `history/${currentU}`), {type:"ใช้โค้ด", detail:`เติมโค้ด ${val} สำเร็จ`, date:new Date().toLocaleString()});
+            alert("สำเร็จ! ได้เงิน ฿" + s.val().reward);
             document.getElementById('redeem-input').value = "";
-        } else alert("โค้ดผิด หรือมีคนใช้ครบแล้ว");
+        } else alert("โค้ดผิดหรือเต็มแล้ว");
     };
 
-    // --- ระบบ History ---
     function loadHistory() {
         onValue(ref(db, `history/${currentU}`), s => {
-            const cont = document.getElementById('history-list');
-            const logs = s.val();
-            if(!logs) { cont.innerHTML = "ยังไม่มีประวัติการทำรายการ"; return; }
-            cont.innerHTML = Object.values(logs).reverse().map(h => `
-                <div style="border-bottom:1px solid #334155; padding:12px 0;">
-                    <small style="color:gray;">${h.date}</small><br>
-                    <b>${h.type}:</b> ${h.detail}
-                    ${h.code ? `<div style="color:var(--accent); background:#000; padding:8px; border:1px dashed var(--accent); margin-top:5px; font-family:monospace;">รหัสสินค้า: ${h.code}</div>`:""}
-                </div>
-            `).join('');
+            document.getElementById('history-list').innerHTML = Object.values(s.val()||{}).reverse().map(h => `
+                <div style="border-bottom:1px solid #334155; padding:10px 0;">
+                    <small>${h.date}</small> - <b>${h.type}</b>: ${h.detail}
+                    ${h.code ? `<div style="color:var(--accent); background:#000; padding:5px; border:1px dashed">รหัส: ${h.code}</div>`:""}
+                </div>`).join('');
         });
     }
 
-    // --- ADMIN PANEL ---
-    window.checkAdmin = () => {
-        if(prompt("กรุณาใส่รหัสผ่านแอดมิน:") === "19911217") { 
-            document.getElementById('view-login').classList.add('hidden');
-            document.getElementById('view-admin').classList.remove('hidden');
-            loadAdminData();
-        }
-    };
+    // ADMIN
+    window.checkAdmin = () => { if(prompt("Pass:")==="19911217") { 
+        document.getElementById('view-login').classList.add('hidden');
+        document.getElementById('view-admin').classList.remove('hidden');
+        loadAdminData();
+    }};
 
     function loadAdminData() {
         onValue(ref(db, 'users'), s => {
-            const data = s.val() || {};
-            document.getElementById('adm-user-sel').innerHTML = Object.keys(data).map(u => `<option value="${u}">${u}</option>`).join('');
-            document.getElementById('adm-user-table').innerHTML = `<table><tr><th>ชื่อผู้ใช้</th><th>เงิน</th><th>จัดการ</th></tr>` + 
-                Object.entries(data).map(([u, i]) => `<tr><td>${u}</td><td>฿${i.credit}</td><td><button onclick="admDelU('${u}')" class="btn-sm" style="background:var(--danger)">ลบสมาชิก</button></td></tr>`).join('') + `</table>`;
+            const d = s.val() || {};
+            document.getElementById('adm-user-sel').innerHTML = Object.keys(d).map(u => `<option value="${u}">${u}</option>`).join('');
+            document.getElementById('adm-user-table').innerHTML = `<table><tr><th>ชื่อ</th><th>เงิน</th><th>ลบ</th></tr>` + 
+                Object.entries(d).map(([u, i]) => `<tr><td>${u}</td><td>฿${i.credit}</td><td><button onclick="admDelU('${u}')" style="background:red; color:white;">ลบ</button></td></tr>`).join('') + `</table>`;
         });
         onValue(ref(db, 'items'), s => {
-            document.getElementById('adm-p-table').innerHTML = `<table><tr><th>ชื่อสินค้า</th><th>ราคา</th><th>จัดการ</th></tr>` + 
-                Object.entries(s.val()||{}).map(([id, p]) => `<tr><td>${p.name}</td><td>฿${p.price}</td><td><button onclick="admDelP('${id}')" class="btn-sm" style="background:var(--danger)">ลบสินค้า</button></td></tr>`).join('') + `</table>`;
+            document.getElementById('adm-p-table').innerHTML = `<table><tr><th>ของ</th><th>ราคา</th><th>ลบ</th></tr>` + 
+                Object.entries(s.val()||{}).map(([id, p]) => `<tr><td>${p.name}</td><td>฿${p.price}</td><td><button onclick="admDelP('${id}')" style="background:red; color:white;">ลบ</button></td></tr>`).join('') + `</table>`;
         });
     }
 
     window.adminAddMoney = async () => {
         const u = document.getElementById('adm-user-sel').value;
-        const amt = parseFloat(document.getElementById('adm-money').value);
-        if(isNaN(amt)) return;
-        const cRef = ref(db, `users/${u}/credit`);
-        const s = await get(cRef);
-        await set(cRef, (s.val()||0)+amt); alert("เสกเงินสำเร็จ!");
-        document.getElementById('adm-money').value = "";
+        const a = parseFloat(document.getElementById('adm-money').value);
+        const s = await get(ref(db, `users/${u}/credit`));
+        await set(ref(db, `users/${u}/credit`), (s.val()||0)+a); alert("เสกแล้ว!");
     };
 
     window.adminAddP = () => {
         const n = document.getElementById('adm-p-name').value;
         const p = parseFloat(document.getElementById('adm-p-price').value);
         const s = document.getElementById('adm-p-code').value;
-        if(n && p && s) {
-            push(ref(db, 'items'), {name:n, price:p, secret:s});
-            alert("เพิ่มสินค้าลงหน้าร้านแล้ว");
-            document.getElementById('adm-p-name').value = "";
-            document.getElementById('adm-p-price').value = "";
-            document.getElementById('adm-p-code').value = "";
-        } else alert("กรอกข้อมูลไม่ครบ");
+        if(n && p && s) push(ref(db, 'items'), {name:n, price:p, secret:s});
     };
 
-    window.admDelU = (u) => { if(confirm(`ยืนยันการลบ ${u}?`)) set(ref(db, 'users/'+u), null); };
-    window.admDelP = (id) => { if(confirm("ยืนยันการลบสินค้า?")) set(ref(db, 'items/'+id), null); };
+    window.adminCreateCode = () => {
+        const n = document.getElementById('adm-c-name').value;
+        const r = parseFloat(document.getElementById('adm-c-reward').value);
+        const l = parseInt(document.getElementById('adm-c-limit').value);
+        if(n && r && l) {
+            set(ref(db, 'codes/' + n), {reward: r, limit: l, usedCount: 0});
+            alert("สร้างโค้ดสำเร็จ!");
+        }
+    };
+
+    window.admDelU = (u) => { if(confirm("ลบ?")) set(ref(db, 'users/'+u), null); };
+    window.admDelP = (id) => { if(confirm("ลบ?")) set(ref(db, 'items/'+id), null); };
 </script>
 </body>
-            </html>
+                                                                                                     </html>
     
